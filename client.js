@@ -19,6 +19,7 @@ var circle = L.circle([39.376089, -104.853487], {
   radius: 500
 }).addTo(mymap);
 
+function updateMap() {
 $.ajax({
   url: '/rest/live',
   data: {
@@ -28,3 +29,10 @@ $.ajax({
     console.log(result);
   }
 });
+}
+
+function displayPoints(data) {
+  console.log('Displaying day-tah points');
+}
+
+setInterval(updateMap(), 10);
