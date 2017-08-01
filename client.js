@@ -19,6 +19,20 @@ L.circle([39.376089, -104.853487], {
   radius: 500
 }).addTo(mymap);
 
+// Displays the points data provided.
+function displayPoints(data) {
+  console.log('Displaying day-tah points');
+  for (var i = 0; i < data.points.length; i++) {
+    L.circle([data.points[i].lat, data.points[i].long], {
+      color: data.points[i].color,
+      fillColor: data.points[i].color,
+      fillOpacity: 0.5,
+      radius: 500
+    }).addTo(mymap);
+  }
+}
+
+// Updates map with latest real time data
 function updateMap() {
 $.ajax({
   type: 'POST',
@@ -28,13 +42,10 @@ $.ajax({
   },
   success: function( result ) {
     console.log(result);
+    displayPoints(data);
   },
   dataType: 'json'
 });
-}
-
-function displayPoints(data) {
-  console.log('Displaying day-tah points');
 }
 
 setInterval(updateMap(), 10);
