@@ -19,6 +19,8 @@ L.circle([39.376089, -104.853487], {
   radius: 500
 }).addTo(mymap);
 
+var lastUpdated = null;
+
 // Displays the points data provided.
 function displayPoints(data) {
   console.log('Displaying day-tah points');
@@ -38,11 +40,12 @@ $.ajax({
   type: 'POST',
   url: '/rest/live/read',
   data: {
-    lastUpdated: null
+    lastUpdated: lastUpdated
   },
   success: function( result ) {
     console.log(result);
-    displayPoints(data);
+    lastUpdated = result.lastUpdated;
+    displayPoints(result);
   },
   dataType: 'json'
 });
