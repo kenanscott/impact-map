@@ -23,11 +23,11 @@ function makeRequest() {
   httpRequest = new XMLHttpRequest();
 
   if (!httpRequest) {
-    alert('Giving up :( Cannot create an XMLHTTP instance');
+    console.log('Could not create XMLHttpRequest instance')
     return false;
   }
 
-  httpRequest.open('GET', 'test.html');
+  httpRequest.open('GET', '/rest/live');
   httpRequest.send();
 
 }
