@@ -18,16 +18,3 @@ var circle = L.circle([39.376089, -104.853487], {
   fillOpacity: 0.5,
   radius: 500
 }).addTo(mymap);
-
-function makeRequest() {
-  httpRequest = new XMLHttpRequest();
-
-  if (!httpRequest) {
-    console.log('Could not create XMLHttpRequest instance')
-    return false;
-  }
-
-  httpRequest.open('GET', '/rest/live');
-  httpRequest.send();
-
-}
