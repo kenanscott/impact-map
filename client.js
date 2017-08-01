@@ -11,6 +11,14 @@ L.tileLayer('https://api.mapbox.com/styles/v1/brandonyates/cj5tvlwng020z2qr7ws0y
   id: 'mapbox.streets'
 }).addTo(mymap);
 
+// Sets a sample circle in Castle Rock
+var circle = L.circle([39.376089, -104.853487], {
+  color: 'red',
+  fillColor: '#f03',
+  fillOpacity: 0.5,
+  radius: 500
+}).addTo(mymap);
+
 
   var circle = L.circle([39.376089, -104.853487], {
       color: 'red',
