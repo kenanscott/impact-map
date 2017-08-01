@@ -21,13 +21,15 @@ var circle = L.circle([39.376089, -104.853487], {
 
 function updateMap() {
 $.ajax({
+  type: 'POST',
   url: '/rest/live',
   data: {
     lastUpdated: null
   },
   success: function( result ) {
     console.log(result);
-  }
+  },
+  dataType: 'json'
 });
 }
 
