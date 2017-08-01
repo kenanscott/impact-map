@@ -12,7 +12,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/brandonyates/cj5tvlwng020z2qr7ws0y
   }).addTo(mymap);
 
 
-  var circle = L.circle([51.508, -0.11], {
+  var circle = L.circle([39.376089, -104.853487], {
       color: 'red',
       fillColor: '#f03',
       fillOpacity: 0.5,
