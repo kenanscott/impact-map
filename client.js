@@ -19,10 +19,15 @@ var circle = L.circle([39.376089, -104.853487], {
   radius: 500
 }).addTo(mymap);
 
+function makeRequest() {
+  httpRequest = new XMLHttpRequest();
 
-  var circle = L.circle([39.376089, -104.853487], {
-      color: 'red',
-      fillColor: '#f03',
-      fillOpacity: 0.5,
-      radius: 500
-  }).addTo(mymap);
+  if (!httpRequest) {
+    alert('Giving up :( Cannot create an XMLHTTP instance');
+    return false;
+  }
+
+  httpRequest.open('GET', 'test.html');
+  httpRequest.send();
+
+}
