@@ -18,3 +18,13 @@ var circle = L.circle([39.376089, -104.853487], {
   fillOpacity: 0.5,
   radius: 500
 }).addTo(mymap);
+
+$.ajax({
+  url: '/rest/live',
+  data: {
+    lastUpdated: null
+  },
+  success: function( result ) {
+    console.log(result);
+  }
+});
