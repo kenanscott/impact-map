@@ -26,6 +26,7 @@ exports.handler = (event, context, callback) => {
   let id = makeId();
   const currentTime = getTime();
   const currentTimePlusTwentyFourHours = getTime() + 86400;
+
   const params = {
     TableName: 'impact-map',
     Item: {
@@ -43,8 +44,8 @@ exports.handler = (event, context, callback) => {
       callback('Entry was not successful');
     } else {
       console.log("Added item:", JSON.stringify(data, null, 2));
+      callback(null, 'Added item');
     }
   });
 }
-callback(null, 'Hello from Lambda');
 };
