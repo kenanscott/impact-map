@@ -2,7 +2,11 @@
 var AWS = require("aws-sdk");
 
 exports.handler = (event, context, callback) => {
-    console.log(event);
-    console.log(event.sourceIP.split(',', 1)[0])
+    console.log('Event = ' + event);
+    const ip = event.sourceIP.split(',', 1)[0]
+    console.log('Looking up IP ' + ip)
+    const geo = geoip.lookup(ip);
+    console.log('Location is ' + geo.ll)
+    
     callback(null, 'Hello from Lambda');
 };
