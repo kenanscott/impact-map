@@ -14,11 +14,6 @@ function makeId() {
   return text;
 }
 
-function getTime() {
-  var d = new Date();
-  var seconds = Math.round(d.getTime() / 1000);
-}
-
 exports.handler = (event, context, callback) => {
   console.log('Event = ' + event);
   const ip = event.sourceIP.split(',', 1)[0]
@@ -26,8 +21,8 @@ exports.handler = (event, context, callback) => {
   const geo = geoip.lookup(ip);
   console.log('Location is ' + geo.ll)
   let id = makeId();
-  const currentTime = getTime();
-  const currentTimePlusTwentyFourHours = getTime() + 86400;
+  const currentTime = Math.floor(new Date() / 1000);
+  const currentTimePlusTwentyFourHours = (Math.floor(new Date() / 1000)) + 86400;
 
   console.log(typeof id);
   console.log(typeof currentTime);
