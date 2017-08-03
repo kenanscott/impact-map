@@ -48,6 +48,7 @@ $.ajax({
   type: 'GET',
   url: '/rest/live/read' + lastUpdatedString,
   success: function( result ) {
+    console.log(result);
     displayPoints(result);
   },
   dataType: 'json'
