@@ -16,7 +16,13 @@ var styles = {
     'color': '#36393d',
     'fillColor': '#36393d',
     'fillOpacity': 0.5,
-    'radius': 300
+    'radius': 100
+  },
+  'commitment': {
+    'color': 'red',
+    'fillColor': '#f03',
+    'fillOpacity': 0.5,
+    'radius': 500
   }
 };
 
