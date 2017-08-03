@@ -36,9 +36,14 @@ function displayPoints(data) {
 
 // Updates map with latest real time data
 function updateMap() {
+  var lastUpdatedString = '';
+  if (lastUpdated == null) {
+    lastUpdatedString = '?lastupdated=' + lastUpdated;
+  }
+
 $.ajax({
   type: 'GET',
-  url: '/rest/live/read?lastupdated=' + lastUpdated,
+  url: '/rest/live/read' + lastUpdatedString,
   success: function( result ) {
     console.log(result);
     lastUpdated = result.lastUpdated;
