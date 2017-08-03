@@ -11,6 +11,21 @@ L.tileLayer('https://api.mapbox.com/styles/v1/brandonyates/cj5tvlwng020z2qr7ws0y
   id: 'mapbox.streets'
 }).addTo(mymap);
 
+var info = L.control();
+
+info.onAdd = function (mymap) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>JesusCares today. <p style="color: black"><span>&#8226; = pageview</span></p><p><span style="color: red">&#8226;</span> = commitment to Christ</p</h4>';
+  };
+
+info.addTo(mymap);
+
 var styles = {
   'view': {
     'color': 'black',
