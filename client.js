@@ -21,7 +21,7 @@ info.onAdd = function (mymap) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    this._div.innerHTML = '<h4>JesusCares today. <p style="color: black"><span>&#8226; = pageview</span></p><p><span style="color: red">&#8226;</span> = commitment to Christ</p</h4>';
+    this._div.innerHTML = '<h1>JesusCares today</h1><h4><p style="color: black"><span>&#8226; = pageview</span></p><p><span style="color: red">&#8226;</span> = commitment to Christ</p></h4>';
   };
 
 info.addTo(mymap);
