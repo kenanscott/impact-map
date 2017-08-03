@@ -67,7 +67,7 @@ function refreshData()
 {
     x = 3;  // 3 Seconds
 
-    // Do your thing here
+    updateMap();
 
     setTimeout(refreshData, x*1000);
 }
