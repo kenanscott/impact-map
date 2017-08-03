@@ -1,6 +1,7 @@
 /*jshint esversion: 6 */
 const AWS = require("aws-sdk");
 const dynamodb = new AWS.DynamoDB.DocumentClient();
+const geoip = require('geoip-lite');
 
 function makeId() {
   let text = '';
