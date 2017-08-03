@@ -16,13 +16,15 @@ var styles = {
     'color': 'black',
     'fillColor': 'black',
     'fillOpacity': 0.5,
-    'radius': 60
+    'radius': 60,
+    'pane': 'overlayPane'
   },
   'commitment': {
     'color': 'red',
     'fillColor': '#f03',
     'fillOpacity': 0.5,
-    'radius': 15000
+    'radius': 15000,
+    'pane': 'markerPane'
   }
 };
 
@@ -36,7 +38,8 @@ function displayPoints(data) {
       color: styles[data[i].Action].color,
       fillColor: styles[data[i].Action].fillColor,
       fillOpacity: styles[data[i].Action].fillOpacity,
-      radius: styles[data[i].Action].radius
+      radius: styles[data[i].Action].radius,
+      pane: styles[data[i].Action].pane
     }).addTo(mymap);
   }
 }
