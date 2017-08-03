@@ -13,8 +13,8 @@ L.tileLayer('https://api.mapbox.com/styles/v1/brandonyates/cj5tvlwng020z2qr7ws0y
 
 var styles = {
   'view': {
-    'color': '#36393d',
-    'fillColor': '#36393d',
+    'color': 'black',
+    'fillColor': 'black',
     'fillOpacity': 0.5,
     'radius': 100
   },
