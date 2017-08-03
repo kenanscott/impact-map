@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+'use strict'
 const AWS = require("aws-sdk");
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const geoip = require('geoip-lite');
@@ -32,7 +33,7 @@ exports.handler = (event, context, callback) => {
   console.log(typeof currentTime);
   console.log(typeof currentTimePlusTwentyFourHours);
   console.log(typeof geo.ll);
-  
+
   const params = {
     TableName: 'impact-map',
     Item: {
