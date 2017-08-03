@@ -27,9 +27,11 @@ exports.handler = (event, context, callback) => {
         "#b": "Action"
     },
     ExpressionAttributeValues: {
-         ":start": todayEpoch
+         ":start": startTime
     }
     };
+    
+let combinedData = [];
 
     console.log("Scanning table.");
     dynamodb.scan(params, onScan);
@@ -41,8 +43,7 @@ exports.handler = (event, context, callback) => {
             // print all items
             console.log("Scan succeeded.");
             data.Items.forEach(function(item) {
-               console.log(item.Coordinates);
-               console.log(item.Action);
+               combinedData = combinedData.concat(item);
             });
     
             // continue scanning if we have more items, because
@@ -52,6 +53,7 @@ exports.handler = (event, context, callback) => {
                 params.ExclusiveStartKey = data.LastEvaluatedKey;
                 dynamodb.scan(params, onScan);
             }
+            callback(null, combinedData);
         }
     }
 };
