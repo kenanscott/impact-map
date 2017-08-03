@@ -62,4 +62,15 @@ $.ajax({
 });
 }
 
-var timer = setInterval(updateMap(), 3000);
+// https://gist.github.com/KartikTalwar/2306741
+function refreshData()
+{
+    x = 3;  // 3 Seconds
+
+    // Do your thing here
+
+    setTimeout(refreshData, x*1000);
+}
+
+
+refreshData(); // execute function
