@@ -24,10 +24,10 @@ var lastUpdated = null;
 // Displays the points data provided.
 function displayPoints(data) {
   console.log('Displaying day-tah points');
-  for (var i = 0; i < data.points.length; i++) {
-    L.circle([data.points[i].lat, data.points[i].long], {
-      color: data.points[i].color,
-      fillColor: data.points[i].color,
+  for (var i = 0; i < data.length; i++) {
+    L.circle([data[i].lat, data[i].long], {
+      color: data[i].color,
+      fillColor: data[i].color,
       fillOpacity: 0.5,
       radius: 500
     }).addTo(mymap);
