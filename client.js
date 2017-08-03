@@ -23,7 +23,7 @@ info.onAdd = function (mymap) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    this._div.innerHTML = '<div style="background-color: rgba(247, 234, 242, 0.64);padding: 14px;border-radius: 5px;"><h1 style="text-align: right";">JesusCares today</h1><h4 style="text-align: right";><p style="color: black"><span>&#8226; = pageview</span></p><p><span style="color: red">&#8226;</span> = commitment to Christ</p></h4></div>';
+    this._div.innerHTML = '<div style="background-color: rgba(247, 234, 242, 0.64);padding: 14px;border-radius: 5px;"><h1 style="text-align: right";">JesusCares today</h1><h4 style="text-align: right";><p style="color: black"><span>&#8226; = pageview</span></p><p><span style="color: red">&#8226;</span> = commitment to Christ</p><p><span id=#pageviews>-</span> pageviews</p><p><span id=#commitments>-</span> commitments to Christ</p></h4></div>';
   };
 
 info.addTo(mymap);
@@ -45,6 +45,9 @@ var styles = {
   }
 };
 
+var pageviews = 0;
+var commitments = 0;
+
 var lastUpdated = null;
 
 // Displays the points data provided.
@@ -58,6 +61,14 @@ function displayPoints(data) {
       radius: styles[data[i].Action].radius,
       pane: styles[data[i].Action].pane
     }).addTo(mymap);
+    if (data[i].Action === 'view') {
+      pageviews++;
+      $('#pageviews').text(pageviews);
+    }
+    if (data[i].Action === 'commitment') {
+      commitments++;
+      $('#commitments').text(commitments);
+    }
   }
 }
 
