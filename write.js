@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-'use strict'
+'use strict';
 const AWS = require("aws-sdk");
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const geoip = require('geoip-lite');
