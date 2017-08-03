@@ -41,10 +41,10 @@ function displayPoints(data) {
   console.log('Displaying day-tah points');
   for (var i = 0; i < data.length; i++) {
     L.circle([data[i].Coordinates[0], data[i].Coordinates[1]], {
-      color: styles.view.color,
-      fillColor: styles.view.fillColor,
-      fillOpacity: styles.view.fillOpacity,
-      radius: styles.view.radius
+      color: styles[data[i].Action].color,
+      fillColor: styles[data[i].Action].fillColor,
+      fillOpacity: styles[data[i].Action].fillOpacity,
+      radius: styles[data[i].Action].radius
     }).addTo(mymap);
   }
 }
