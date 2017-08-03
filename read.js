@@ -10,12 +10,11 @@ exports.handler = (event, context, callback) => {
     var dd = today.getDate();
     const todayEpoch = new Date(yyyy, mm, dd).getTime() / 1000;
     console.log(todayEpoch);
-    // 21600
-    
+
     let startTime = todayEpoch - 21600;
     
-    if (event.lastupdated) {
-        startTime = event.lastupdated;
+    if (event.lastupdated !== undefined) {
+        startTime = Number(event.lastupdated);
     }
     
     var params = {
