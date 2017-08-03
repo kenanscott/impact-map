@@ -26,14 +26,6 @@ var styles = {
   }
 };
 
-// Sets a sample circle in Castle Rock
-L.circle([39.376089, -104.853487], {
-  color: 'red',
-  fillColor: '#f03',
-  fillOpacity: 0.5,
-  radius: 500
-}).addTo(mymap);
-
 var lastUpdated = null;
 
 // Displays the points data provided.
