@@ -25,7 +25,7 @@ var lastUpdated = null;
 function displayPoints(data) {
   console.log('Displaying day-tah points');
   for (var i = 0; i < data.length; i++) {
-    L.circle([data[i].lat, data[i].long], {
+    L.circle([data[i].ll[0], data[i].ll[1]], {
       color: data[i].color,
       fillColor: data[i].color,
       fillOpacity: 0.5,
