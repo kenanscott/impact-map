@@ -24,18 +24,14 @@ exports.handler = (event, context, callback) => {
   const currentTime = Math.floor(new Date() / 1000);
   const currentTimePlusTwentyFourHours = (Math.floor(new Date() / 1000)) + 86400;
 
-  console.log(typeof id);
-  console.log(typeof currentTime);
-  console.log(typeof currentTimePlusTwentyFourHours);
-  console.log(typeof geo.ll);
-
   const params = {
     TableName: 'impact-map',
     Item: {
       'Id': id,
       'Added': currentTime,
       'Expire': currentTimePlusTwentyFourHours,
-      'Coordinates': geo.ll
+      'Coordinates': geo.ll,
+      'Action': event.action
     },
   };
 
