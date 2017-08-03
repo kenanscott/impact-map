@@ -28,6 +28,11 @@ exports.handler = (event, context, callback) => {
   const currentTime = getTime();
   const currentTimePlusTwentyFourHours = getTime() + 86400;
 
+  console.log(typeof id);
+  console.log(typeof currentTime);
+  console.log(typeof currentTimePlusTwentyFourHours);
+  console.log(typeof geo.ll);
+  
   const params = {
     TableName: 'impact-map',
     Item: {
