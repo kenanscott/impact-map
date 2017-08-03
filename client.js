@@ -16,7 +16,7 @@ var styles = {
     'color': 'black',
     'fillColor': 'black',
     'fillOpacity': 0.5,
-    'radius': 100
+    'radius': 60
   },
   'commitment': {
     'color': 'red',
