@@ -15,7 +15,6 @@ function makeId() {
 }
 
 exports.handler = (event, context, callback) => {
-  console.log('Event = ' + event);
   const ip = event.sourceIP.split(',', 1)[0]
   console.log('Looking up IP ' + ip)
   const geo = geoip.lookup(ip);
@@ -23,9 +22,7 @@ exports.handler = (event, context, callback) => {
   let id = makeId();
   const currentTime = Math.floor(new Date() / 1000);
   const currentTimePlusTwentyFourHours = (Math.floor(new Date() / 1000)) + 86400;
-  console.log(geo.ll[0]);
-  console.log(geo.ll[1]);
-  
+
   const params = {
     TableName: 'impact-map',
     Item: {
