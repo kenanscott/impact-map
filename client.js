@@ -62,4 +62,4 @@ $.ajax({
 });
 }
 
-setInterval(updateMap(), 10);
+var timer = setInterval(updateMap(), 3000);
