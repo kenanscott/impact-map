@@ -47,5 +47,4 @@ exports.handler = (event, context, callback) => {
       callback(null, 'Added item');
     }
   });
-}
 };
