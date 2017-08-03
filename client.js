@@ -11,6 +11,15 @@ L.tileLayer('https://api.mapbox.com/styles/v1/brandonyates/cj5tvlwng020z2qr7ws0y
   id: 'mapbox.streets'
 }).addTo(mymap);
 
+var styles = {
+  'view': {
+    'color': '#36393d',
+    'fillColor': '#36393d',
+    'fillOpacity': 0.5,
+    'radius': 300
+  }
+};
+
 // Sets a sample circle in Castle Rock
 L.circle([39.376089, -104.853487], {
   color: 'red',
@@ -26,10 +35,10 @@ function displayPoints(data) {
   console.log('Displaying day-tah points');
   for (var i = 0; i < data.length; i++) {
     L.circle([data[i].Coordinates[0], data[i].Coordinates[1]], {
-      color: data[i].color,
-      fillColor: data[i].color,
-      fillOpacity: 0.5,
-      radius: 500
+      color: styles.view.color,
+      fillColor: styles.view.fillColor,
+      fillOpacity: styles.view.fillOpacity,
+      radius: styles.view.radius
     }).addTo(mymap);
   }
 }
