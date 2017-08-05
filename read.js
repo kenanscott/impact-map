@@ -12,11 +12,11 @@ exports.handler = (event, context, callback) => {
     console.log(todayEpoch);
 
     let startTime = todayEpoch - 21600;
-
+    
     if (event.lastupdated !== undefined) {
         startTime = Number(event.lastupdated);
     }
-
+    
     var params = {
     TableName: "impact-map",
     ProjectionExpression: "Coordinates, #b",
@@ -29,12 +29,12 @@ exports.handler = (event, context, callback) => {
          ":start": startTime
     }
     };
-
+    
 let combinedData = [];
 
     console.log("Scanning table.");
     dynamodb.scan(params, onScan);
-
+    
     function onScan(err, data) {
         if (err) {
             console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
@@ -44,7 +44,7 @@ let combinedData = [];
             data.Items.forEach(function(item) {
                combinedData = combinedData.concat(item);
             });
-
+    
             // continue scanning if we have more items, because
             // scan can retrieve a maximum of 1MB of data
             if (typeof data.LastEvaluatedKey != "undefined") {
