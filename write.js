@@ -1,8 +1,9 @@
 /*jshint esversion: 6 */
 'use strict';
-const AWS = require("aws-sdk");
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const geoip = require('geoip-lite');
+const AWSXRay = require('aws-xray-sdk-core');
+const AWS = AWSXRay.captureAWS(require('aws-sdk'));
 
 function makeId() {
   let text = '';
