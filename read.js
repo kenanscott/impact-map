@@ -31,7 +31,7 @@ exports.handler = (event, context, callback) => {
       "#b": "Action"
     },
     ExpressionAttributeValues: {
-      ":start": startTimeString
+      ":start": startTime
     }
   };
 
