@@ -13,11 +13,12 @@ exports.handler = (event, context, callback) => {
     console.log(todayEpoch);
 
     let startTime = todayEpoch + 21600;
-
+    console.log('startTime = ' + startTime);
     if (event.lastupdated !== undefined) {
+        console.log('Detecting lastupdated variable, ' + event.lastupdated);
         startTime = Number(event.lastupdated);
     }
-
+    console.log('startTime = ' + startTime);
     let startTimeString = startTime.toString([10]);
 
     console.log('startTimeString = ' + startTimeString);
