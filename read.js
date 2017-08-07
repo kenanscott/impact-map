@@ -18,6 +18,8 @@ exports.handler = (event, context, callback) => {
         startTime = Number(event.lastupdated);
     }
 
+    let startTimeString = startTime.toString([10]);
+
     var params = {
     TableName: "impact-map",
     ProjectionExpression: "Coordinates, #b",
@@ -28,7 +30,7 @@ exports.handler = (event, context, callback) => {
     },
     ExpressionAttributeValues: {
          ":start": {
-           "N": startTime.toString([10])
+           "N": startTimeString
          }
     }
     };
