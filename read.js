@@ -21,9 +21,8 @@ exports.handler = (event, context, callback) => {
     var params = {
     TableName: "impact-map",
     ProjectionExpression: "Coordinates, #b",
-    FilterExpression: "#a > :start",
+    FilterExpression: "Added > :start",
     ExpressionAttributeNames: {
-        "#a": "Added",
         "#b": "Action"
     },
     ExpressionAttributeValues: {
