@@ -14,7 +14,7 @@ exports.handler = (event, context, callback) => {
 
     let startTime = todayEpoch + 21600;
     console.log('startTime = ' + startTime);
-    if (event.lastupdated !== undefined) {
+    if (event.lastupdated > 1) {
         console.log('Detecting lastupdated variable, ' + event.lastupdated);
         startTime = Number(event.lastupdated);
     }
