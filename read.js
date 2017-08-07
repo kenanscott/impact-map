@@ -20,6 +20,8 @@ exports.handler = (event, context, callback) => {
 
     let startTimeString = startTime.toString([10]);
 
+    console.log('startTimeString = ' + startTimeString);
+
     var params = {
     TableName: "impact-map",
     ProjectionExpression: "Coordinates, #b",
