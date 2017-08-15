@@ -13,12 +13,12 @@ exports.handler = (event, context, callback) => {
   console.log('UTC beginning of the day epoch = ' + todayEpoch);
 
   let startTime = todayEpoch + 21600;
-  console.log('startTime = ' + startTime);
   if (event.lastupdated > 1) {
     console.log('Detecting lastupdated variable, ' + event.lastupdated);
     startTime = Number(event.lastupdated);
   }
-  console.log('startTime = ' + startTime);
+
+  console.log('Scanning from greater than ' + startTime);
   let startTimeString = startTime.toString([10]);
 
   console.log('startTimeString = ' + startTimeString);
