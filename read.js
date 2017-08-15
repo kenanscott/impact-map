@@ -10,7 +10,7 @@ exports.handler = (event, context, callback) => {
   var mm = today.getMonth();
   var dd = today.getDate();
   const todayEpoch = new Date(yyyy, mm, dd).getTime() / 1000;
-  console.log(todayEpoch);
+  console.log('UTC beginning of the day epoch = ' + todayEpoch);
 
   let startTime = todayEpoch + 21600;
   console.log('startTime = ' + startTime);
