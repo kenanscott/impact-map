@@ -19,9 +19,6 @@ exports.handler = (event, context, callback) => {
   }
 
   console.log('Scanning from greater than ' + startTime);
-  let startTimeString = startTime.toString([10]);
-
-  console.log('startTimeString = ' + startTimeString);
 
   var params = {
     TableName: "impact-map",
