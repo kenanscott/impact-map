@@ -62,6 +62,7 @@ exports.handler = (event, context, callback) => {
         dynamodb.scan(params, onScan);
       }
       // Returns the item data back to the client
+      console.log('Returning ' + combinedData.length + ' items to the client')
       callback(null, combinedData);
     }
   }
