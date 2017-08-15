@@ -6,9 +6,9 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = (event, context, callback) => {
   const today = new Date();
-  var yyyy = today.getFullYear();
-  var mm = today.getMonth();
-  var dd = today.getDate();
+  const yyyy = today.getFullYear();
+  const mm = today.getMonth();
+  const dd = today.getDate();
   const todayEpoch = new Date(yyyy, mm, dd).getTime() / 1000;
   console.log('UTC beginning of the day epoch = ' + todayEpoch);
 
