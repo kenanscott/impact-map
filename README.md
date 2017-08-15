@@ -15,3 +15,4 @@ Impact Map for JesusCares.com
 2. CloudFront sends the request to API Gateway since the URL begins with /rest
 3. API Gateway sends the request to Lambda, along with the lastupdated time.
 4. Lambda in read.js scans the DynamoDB table and returns items that were added since lastupdated. Or, if this is the first request and lastupdated isn't there, it will return all items that were added since the beginning of the day, Mountain Time.
+5. The client JavaScript processes the data and displays it on the map.
