@@ -4,13 +4,14 @@
 const AWSXRay = require('aws-xray-sdk-core');
 const AWS = AWSXRay.captureAWS(require('aws-sdk'));
 const dynamodb = new AWS.DynamoDB.DocumentClient();
+const moment = require('moment-timezone');
 
 exports.handler = (event, context, callback) => {
   // Set the epoch of the beginning of the day
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = today.getMonth();
-  const dd = today.getDate();
+  let today = moment().tz('America/Denver');
+  const yyyy = today.format('DD')
+  const mm = today.format('MM')
+  const dd = today.format('YYYY')
   const todayEpoch = new Date(yyyy, mm, dd).getTime() / 1000;
   console.log('UTC beginning of the day epoch = ' + todayEpoch);
   // Set the time to start scanning from to the beginning of the day in Mountain Time
