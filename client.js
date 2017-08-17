@@ -1,46 +1,198 @@
-// Initalizes map
-var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+var map = null;
+var legend = document.getElementById('legend');
 
-// Sets the default view of the map
-mymap.setView(new L.LatLng(38.1711269, -97.5383369), 5);
+function initMap() {
+  // Create a map object and specify the DOM element for display.
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {
+      lat: 38.922239,
+      lng: -95.794675
+    },
+    disableDefaultUI: true,
+    styles: styles,
+    zoom: 5
+  });
+  map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
 
-// Sets the tile layer from Mapbox
-L.tileLayer('https://api.mapbox.com/styles/v1/brandonyates/cj5tvlwng020z2qr7ws0ylg1o/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYnJhbmRvbnlhdGVzIiwiYSI6ImNpcTl3a3AzbDAxbmhmeW0xaGYwbmIwNmQifQ.ItJcFDmazEMy-2spCUZrrA', {
-  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-  maxZoom: 10,
-  id: 'mapbox.streets'
-}).addTo(mymap);
+}
 
-var info = L.control({
-  position: 'topright'
-});
+var styles = [{
+    "elementType": "geometry",
+    "stylers": [{
+      "color": "#f5f5f5"
+    }]
+  },
+  {
+    "elementType": "labels.icon",
+    "stylers": [{
+      "visibility": "off"
+    }]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [{
+      "color": "#616161"
+    }]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [{
+      "color": "#f5f5f5"
+    }]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "stylers": [{
+      "visibility": "off"
+    }]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [{
+      "color": "#bdbdbd"
+    }]
+  },
+  {
+    "featureType": "administrative.neighborhood",
+    "stylers": [{
+      "visibility": "off"
+    }]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [{
+      "color": "#eeeeee"
+    }]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text",
+    "stylers": [{
+      "visibility": "off"
+    }]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [{
+      "color": "#757575"
+    }]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry",
+    "stylers": [{
+      "color": "#e5e5e5"
+    }]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [{
+      "color": "#9e9e9e"
+    }]
+  },
+  {
+    "featureType": "road",
+    "stylers": [{
+      "visibility": "off"
+    }]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [{
+      "color": "#ffffff"
+    }]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels",
+    "stylers": [{
+      "visibility": "off"
+    }]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "labels.text.fill",
+    "stylers": [{
+      "color": "#757575"
+    }]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [{
+      "color": "#dadada"
+    }]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [{
+      "color": "#616161"
+    }]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels.text.fill",
+    "stylers": [{
+      "color": "#9e9e9e"
+    }]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry",
+    "stylers": [{
+      "color": "#e5e5e5"
+    }]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [{
+      "color": "#eeeeee"
+    }]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [{
+      "color": "#c9c9c9"
+    }]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text",
+    "stylers": [{
+      "visibility": "off"
+    }]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [{
+      "color": "#9e9e9e"
+    }]
+  }
+];
 
-info.onAdd = function (mymap) {
-    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-    this.update();
-    return this._div;
-};
 
-// method that we will use to update the control based on feature properties passed
-info.update = function (props) {
-    this._div.innerHTML = '<div style="background-color: rgb(243, 244, 242);padding: 14px;border-radius: 5px;"><h1 style="text-align: left;font-family: \'Roboto\', sans-serif;">JesusCares today</h1><h4 style="text-align: left;font-size: medium;font-family: \'Roboto\', sans-serif;"><p style="color: black"><span>&#8226; pageview</span></p><p><span style="color: red">&#8226;</span> commitment to Christ</p><p><span id=pageviews>-</span> pageviews</p><p><span id=commitments>-</span> commitments to Christ</p></h4></div>';
-  };
-
-info.addTo(mymap);
-
-var styles = {
+var pointStyles = {
   'view': {
-    'color': 'black',
-    'fillColor': 'black',
+    'color': '#000000',
+    'fillColor': '#000000',
     'fillOpacity': 0.5,
-    'radius': 60,
+    'radius': 20000,
     'pane': 'overlayPane'
   },
   'commitment': {
     'color': 'red',
     'fillColor': '#f03',
     'fillOpacity': 0.5,
-    'radius': 15000,
+    'radius': 55000,
     'pane': 'markerPane'
   }
 };
@@ -54,13 +206,18 @@ var lastUpdated = null;
 function displayPoints(data) {
   console.log('Displaying day-tah points');
   for (var i = 0; i < data.length; i++) {
-    L.circle([data[i].Coordinates[0], data[i].Coordinates[1]], {
-      color: styles[data[i].Action].color,
-      fillColor: styles[data[i].Action].fillColor,
-      fillOpacity: styles[data[i].Action].fillOpacity,
-      radius: styles[data[i].Action].radius,
-      pane: styles[data[i].Action].pane
-    }).addTo(mymap);
+
+    // Create LatLng object
+    var LatLng = new google.maps.LatLng({lat: data[i].Coordinates[0], lng: data[i].Coordinates[1]});
+
+    var circle = new google.maps.Circle({
+      fillColor: pointStyles[data[i].Action].fillColor,
+      fillOpacity: pointStyles[data[i].Action].fillOpacity,
+      map: map,
+      center: LatLng,
+      radius: pointStyles[data[i].Action].radius,
+      strokeWeight: 0
+    });
     if (data[i].Action === 'view') {
       pageviews++;
       $('#pageviews').text(pageviews);
@@ -82,24 +239,23 @@ function updateMap() {
 
   lastUpdated = new Date() / 1000;
 
-$.ajax({
-  type: 'GET',
-  url: '/rest/live/read' + lastUpdatedString,
-  success: function( result ) {
-    displayPoints(result);
-  },
-  dataType: 'json'
-});
+  $.ajax({
+    type: 'GET',
+    url: '/rest/live/read' + lastUpdatedString,
+    success: function(result) {
+      displayPoints(result);
+    },
+    dataType: 'json'
+  });
 }
 
 // https://gist.github.com/KartikTalwar/2306741
-function refreshData()
-{
-    x = 3;  // 3 Seconds
+function refreshData() {
+  x = 3; // 3 Seconds
 
-    updateMap();
+  updateMap();
 
-    setTimeout(refreshData, x*1000);
+  setTimeout(refreshData, x * 1000);
 }
 
 
