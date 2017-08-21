@@ -184,16 +184,16 @@ var pointStyles = {
   'view': {
     'color': '#000000',
     'fillColor': '#000000',
-    'strokeColor': '#000000',
     'fillOpacity': 0.5,
-    'scale': 2
+    'radius': 35000,
+    'pane': 'overlayPane'
   },
   'commitment': {
     'color': 'red',
-    'fillColor': 'red',
-    'strokeColor': 'red',
-    'fillOpacity': 0.8,
-    'scale': 3.5
+    'fillColor': '#f03',
+    'fillOpacity': 0.5,
+    'radius': 75000,
+    'pane': 'markerPane'
   }
 };
 
@@ -210,17 +210,13 @@ function displayPoints(data) {
     // Create LatLng object
     var LatLng = new google.maps.LatLng({lat: data[i].Coordinates[0], lng: data[i].Coordinates[1]});
 
-    var marker = new google.maps.Marker({
-      position: LatLng,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: pointStyles[data[i].Action].scale,
-        strokeColor: pointStyles[data[i].Action].strokeColor,
-        fillOpacity: pointStyles[data[i].Action].fillOpacity,
-        fillColor: pointStyles[data[i].Action].fillColor
-      },
-      draggable: false,
-      map: map
+    var circle = new google.maps.Circle({
+      fillColor: pointStyles[data[i].Action].fillColor,
+      fillOpacity: pointStyles[data[i].Action].fillOpacity,
+      map: map,
+      center: LatLng,
+      radius: pointStyles[data[i].Action].radius,
+      strokeWeight: 0
     });
 
     if (data[i].Action === 'view') {
