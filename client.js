@@ -211,7 +211,7 @@ function displayPoints(data) {
     var LatLng = new google.maps.LatLng({lat: data[i].Coordinates[0], lng: data[i].Coordinates[1]});
 
     var marker = new google.maps.Marker({
-      position: map.getCenter(),
+      position: LatLng,
       icon: {
         path: google.maps.SymbolPath.CIRCLE,
         scale: 2,
