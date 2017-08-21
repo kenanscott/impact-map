@@ -184,16 +184,16 @@ var pointStyles = {
   'view': {
     'color': '#000000',
     'fillColor': '#000000',
+    'strokeColor': '#000000',
     'fillOpacity': 0.5,
-    'radius': 20000,
-    'pane': 'overlayPane'
+    'radius': 20000
   },
   'commitment': {
     'color': 'red',
-    'fillColor': '#f03',
-    'fillOpacity': 0.5,
-    'radius': 55000,
-    'pane': 'markerPane'
+    'fillColor': 'red',
+    'strokeColor': 'red',
+    'fillOpacity': 0.8,
+    'radius': 55000
   }
 };
 
@@ -210,14 +210,19 @@ function displayPoints(data) {
     // Create LatLng object
     var LatLng = new google.maps.LatLng({lat: data[i].Coordinates[0], lng: data[i].Coordinates[1]});
 
-    var circle = new google.maps.Circle({
-      fillColor: pointStyles[data[i].Action].fillColor,
-      fillOpacity: pointStyles[data[i].Action].fillOpacity,
-      map: map,
-      center: LatLng,
-      radius: pointStyles[data[i].Action].radius,
-      strokeWeight: 0
+    var marker = new google.maps.Marker({
+      position: map.getCenter(),
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 2,
+        strokeColor: pointStyles[data[i].Action].strokeColor,
+        fillOpacity: pointStyles[data[i].Action].fillOpacity,
+        fillColor: pointStyles[data[i].Action].fillColor
+      },
+      draggable: false,
+      map: map
     });
+
     if (data[i].Action === 'view') {
       pageviews++;
       $('#pageviews').text(pageviews);
