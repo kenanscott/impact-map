@@ -186,14 +186,14 @@ var pointStyles = {
     'fillColor': '#000000',
     'strokeColor': '#000000',
     'fillOpacity': 0.5,
-    'radius': 20000
+    'scale': 2
   },
   'commitment': {
     'color': 'red',
     'fillColor': 'red',
     'strokeColor': 'red',
     'fillOpacity': 0.8,
-    'radius': 55000
+    'scale': 3.5
   }
 };
 
@@ -214,7 +214,7 @@ function displayPoints(data) {
       position: LatLng,
       icon: {
         path: google.maps.SymbolPath.CIRCLE,
-        scale: 2,
+        scale: pointStyles[data[i].Action].scale,
         strokeColor: pointStyles[data[i].Action].strokeColor,
         fillOpacity: pointStyles[data[i].Action].fillOpacity,
         fillColor: pointStyles[data[i].Action].fillColor
