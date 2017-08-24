@@ -233,6 +233,18 @@ function displayPoints(data) {
   }
 }
 
+function responseCheck() {
+  if (httpRequest.readyState === XMLHttpRequest.DONE) {
+    if (httpRequest.status === 200) {
+      var response = JSON.parse(httpRequest.responseText);
+      displayPoints(response);
+    } else {
+      console.log('There was a problem with the request');
+    }
+  }
+}
+
+
 // Updates map with latest real time data
 function updateMap() {
 
@@ -243,14 +255,11 @@ function updateMap() {
 
   lastUpdated = new Date() / 1000;
 
-  $.ajax({
-    type: 'GET',
-    url: '/rest/live/read' + lastUpdatedString,
-    success: function(result) {
-      displayPoints(result);
-    },
-    dataType: 'json'
-  });
+  // Send API GET request for data
+  httpRequest.onreadystatechange = responseCheck;
+  httpRequest.open('GET', '/rest/live/read' + lastUpdatedString, true);
+  httpRequest.send();
+
 }
 
 // https://gist.github.com/KartikTalwar/2306741
