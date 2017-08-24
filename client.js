@@ -238,7 +238,6 @@ function responseCheck() {
       var response = JSON.parse(httpRequest.responseText);
       displayPoints(response);
     } else {
-      console.log('There was a problem with the request');
     }
   }
 }
@@ -276,6 +275,5 @@ function refreshData() {
 
   setTimeout(refreshData, x * 1000);
 }
-
 
 refreshData(); // execute function
