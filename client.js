@@ -248,6 +248,13 @@ function responseCheck() {
 // Updates map with latest real time data
 function updateMap() {
 
+  httpRequest = new XMLHttpRequest();
+
+  if (!httpRequest) {
+    alert('Giving up :( Cannot create an XMLHTTP instance');
+    return false;
+  }
+
   var lastUpdatedString = '';
   if (lastUpdated != null) {
     lastUpdatedString = '?lastupdated=' + lastUpdated;
