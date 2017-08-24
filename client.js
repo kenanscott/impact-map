@@ -204,7 +204,6 @@ var lastUpdated = null;
 
 // Displays the points data provided.
 function displayPoints(data) {
-  console.log('Displaying day-tah points');
   for (var i = 0; i < data.length; i++) {
 
     // Create LatLng object
