@@ -208,7 +208,10 @@ function displayPoints(data) {
   for (var i = 0; i < data.length; i++) {
 
     // Create LatLng object
-    var LatLng = new google.maps.LatLng({lat: data[i].Coordinates[0], lng: data[i].Coordinates[1]});
+    var LatLng = new google.maps.LatLng({
+      lat: data[i].Coordinates[0],
+      lng: data[i].Coordinates[1]
+    });
 
     var circle = new google.maps.Circle({
       fillColor: pointStyles[data[i].Action].fillColor,
