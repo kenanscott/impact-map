@@ -208,7 +208,10 @@ function displayPoints(data) {
   for (var i = 0; i < data.length; i++) {
 
     // Create LatLng object
-    var LatLng = new google.maps.LatLng({lat: data[i].Coordinates[0], lng: data[i].Coordinates[1]});
+    var LatLng = new google.maps.LatLng({
+      lat: data[i].Coordinates[0],
+      lng: data[i].Coordinates[1]
+    });
 
     var circle = new google.maps.Circle({
       fillColor: pointStyles[data[i].Action].fillColor,
@@ -221,17 +224,36 @@ function displayPoints(data) {
 
     if (data[i].Action === 'view') {
       pageviews++;
-      $('#pageviews').text(pageviews);
+      document.getElementById("pageviews").innerHTML = pageviews;
     }
     if (data[i].Action === 'commitment') {
       commitments++;
-      $('#commitments').text(commitments);
+      document.getElementById("commitments").innerHTML = commitments;
     }
   }
 }
 
+function responseCheck() {
+  if (httpRequest.readyState === XMLHttpRequest.DONE) {
+    if (httpRequest.status === 200) {
+      var response = JSON.parse(httpRequest.responseText);
+      displayPoints(response);
+    } else {
+      console.log('There was a problem with the request');
+    }
+  }
+}
+
+
 // Updates map with latest real time data
 function updateMap() {
+
+  httpRequest = new XMLHttpRequest();
+
+  if (!httpRequest) {
+    alert('Giving up :( Cannot create an XMLHTTP instance');
+    return false;
+  }
 
   var lastUpdatedString = '';
   if (lastUpdated != null) {
@@ -240,14 +262,11 @@ function updateMap() {
 
   lastUpdated = new Date() / 1000;
 
-  $.ajax({
-    type: 'GET',
-    url: '/rest/live/read' + lastUpdatedString,
-    success: function(result) {
-      displayPoints(result);
-    },
-    dataType: 'json'
-  });
+  // Send API GET request for data
+  httpRequest.onreadystatechange = responseCheck;
+  httpRequest.open('GET', '/rest/live/read' + lastUpdatedString, true);
+  httpRequest.send();
+
 }
 
 // https://gist.github.com/KartikTalwar/2306741
