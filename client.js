@@ -223,13 +223,13 @@ function displayPoints(data) {
 
     if (data[i].Action === 'view') {
       pageviews++;
-      document.getElementById("pageviews").innerHTML = pageviews;
     }
     if (data[i].Action === 'commitment') {
       commitments++;
-      document.getElementById("commitments").innerHTML = commitments;
     }
   }
+  document.getElementById("pageviews").innerText = pageviews;
+  document.getElementById("commitments").innerText = commitments;
 }
 
 function responseCheck() {
@@ -238,7 +238,6 @@ function responseCheck() {
       var response = JSON.parse(httpRequest.responseText);
       displayPoints(response);
     } else {
-      console.log('There was a problem with the request');
     }
   }
 }
@@ -276,6 +275,5 @@ function refreshData() {
 
   setTimeout(refreshData, x * 1000);
 }
-
 
 refreshData(); // execute function
