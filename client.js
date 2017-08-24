@@ -224,11 +224,11 @@ function displayPoints(data) {
 
     if (data[i].Action === 'view') {
       pageviews++;
-      $('#pageviews').text(pageviews);
+      document.getElementById("pageviews").innerHTML = pageviews;
     }
     if (data[i].Action === 'commitment') {
       commitments++;
-      $('#commitments').text(commitments);
+      document.getElementById("commitments").innerHTML = commitments;
     }
   }
 }
