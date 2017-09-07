@@ -204,76 +204,106 @@ var lastUpdated = null;
 
 // Displays the points data provided.
 function displayPoints(data) {
-  for (var i = 0; i < data.length; i++) {
 
-    // Create LatLng object
-    var LatLng = new google.maps.LatLng({
-      lat: data[i].Coordinates[0],
-      lng: data[i].Coordinates[1]
-    });
+  return new Promise(function(resolve, reject) {
 
-    var circle = new google.maps.Circle({
-      fillColor: pointStyles[data[i].Action].fillColor,
-      fillOpacity: pointStyles[data[i].Action].fillOpacity,
-      map: map,
-      center: LatLng,
-      radius: pointStyles[data[i].Action].radius,
-      strokeWeight: 0
-    });
+    for (var i = 0; i < data.length; i++) {
 
-    if (data[i].Action === 'view') {
-      pageviews++;
+      // Create LatLng object
+      var LatLng = new google.maps.LatLng({
+        lat: data[i].Coordinates[0],
+        lng: data[i].Coordinates[1]
+      });
+
+      var circle = new google.maps.Circle({
+        fillColor: pointStyles[data[i].Action].fillColor,
+        fillOpacity: pointStyles[data[i].Action].fillOpacity,
+        map: map,
+        center: LatLng,
+        radius: pointStyles[data[i].Action].radius,
+        strokeWeight: 0
+      });
+
+      if (data[i].Action === 'view') {
+        pageviews++;
+      }
+      if (data[i].Action === 'commitment') {
+        commitments++;
+      }
     }
-    if (data[i].Action === 'commitment') {
-      commitments++;
-    }
-  }
-  document.getElementById("pageviews").innerText = pageviews;
-  document.getElementById("commitments").innerText = commitments;
-}
+    document.getElementById("pageviews").innerText = pageviews;
+    document.getElementById("commitments").innerText = commitments;
+    resolve('All points processed');
+  });
 
-function responseCheck() {
-  if (httpRequest.readyState === XMLHttpRequest.DONE) {
-    if (httpRequest.status === 200) {
-      var response = JSON.parse(httpRequest.responseText);
-      displayPoints(response);
-    } else {
-    }
-  }
 }
 
 
 // Updates map with latest real time data
-function updateMap() {
+// https://developers.google.com/web/fundamentals/getting-started/primers/promises
+function get(url) {
 
-  httpRequest = new XMLHttpRequest();
+  // Return a new promise.
+  return new Promise(function(resolve, reject) {
+    // Do the usual XHR stuff
+    var req = new XMLHttpRequest();
 
-  if (!httpRequest) {
-    alert('Giving up :( Cannot create an XMLHTTP instance');
-    return false;
-  }
+    var lastUpdatedString = '';
+    if (lastUpdated != null) {
+      lastUpdatedString = '?lastupdated=' + lastUpdated;
+    }
 
-  var lastUpdatedString = '';
-  if (lastUpdated != null) {
-    lastUpdatedString = '?lastupdated=' + lastUpdated;
-  }
+    lastUpdated = new Date() / 1000;
 
-  lastUpdated = new Date() / 1000;
+    req.open('GET', url + lastUpdatedString);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.onload = function() {
+      // This is called even on 404 etc
+      // so check the status
+      if (req.status == 200) {
+        // Resolve the promise with the response text
+        resolve(req.response);
+      } else {
+        // Otherwise reject with the status text
+        // which will hopefully be a meaningful error
+        reject(Error(req.statusText));
+      }
+    };
 
-  // Send API GET request for data
-  httpRequest.onreadystatechange = responseCheck;
-  httpRequest.open('GET', '/rest/live/read' + lastUpdatedString, true);
-  httpRequest.send();
+    // Handle network errors
+    req.onerror = function() {
+      reject(Error("Network Error"));
+    };
 
+    // Make the request
+    req.send();
+  });
 }
+
+function callPromise() {
+  return new Promise(function(resolve, reject) {
+
+  get('/rest/live/read').then(JSON.parse).then(displayPoints).then(function() {
+    console.log("callPromise Success!");
+    resolve('Success!');
+  }, function(error) {
+    console.error("callPromise Failed!", error);
+    reject(Error(error));
+  });
+  });
+}
+
 
 // https://gist.github.com/KartikTalwar/2306741
 function refreshData() {
   x = 3; // 3 Seconds
 
-  updateMap();
-
-  setTimeout(refreshData, x * 1000);
+  callPromise().then(function() {
+    setTimeout(refreshData, x * 1000);
+  }, function(error) {
+    console.error(error);
+    setTimeout(refreshData, x * 1000);
+  });
 }
 
 refreshData(); // execute function
