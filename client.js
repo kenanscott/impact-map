@@ -249,7 +249,7 @@ function updateMap() {
   httpRequest = new XMLHttpRequest();
 
   if (!httpRequest) {
-    alert('Giving up :( Cannot create an XMLHTTP instance');
+    console.error('Giving up :( Cannot create an XMLHTTP instance');
     return false;
   }
 
