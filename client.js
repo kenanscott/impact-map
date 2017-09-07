@@ -261,6 +261,7 @@ function updateMap() {
   lastUpdated = new Date() / 1000;
 
   // Send API GET request for data
+  httpRequest.setRequestHeader('Content-Type', 'application/json');
   httpRequest.onreadystatechange = responseCheck;
   httpRequest.open('GET', '/rest/live/read' + lastUpdatedString, true);
   httpRequest.send();
