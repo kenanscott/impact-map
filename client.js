@@ -272,6 +272,8 @@ function get(url) {
 }
 
 function callPromise() {
+  return new Promise(function(resolve, reject) {
+
   var lastUpdatedString = '';
   if (lastUpdated != null) {
     lastUpdatedString = '?lastupdated=' + lastUpdated;
@@ -280,9 +282,12 @@ function callPromise() {
   lastUpdated = new Date() / 1000;
 
   get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function() {
-    console.log("Success!");
+    console.log("callPromise Success!");
+    resolve('Success!');
   }, function(error) {
-    console.error("Failed!", error);
+    console.error("callPromise Failed!", error);
+    reject(Error(error));
+  });
   });
 }
 
@@ -291,9 +296,12 @@ function callPromise() {
 function refreshData() {
   x = 3; // 3 Seconds
 
-  callPromise();
-
-  setTimeout(refreshData, x * 1000);
+  callPromise().then(function() {
+    setTimeout(refreshData, x * 1000);
+  }, function(error) {
+    console.error(error);
+    setTimeout(refreshData, x * 1000);
+  });
 }
 
 refreshData(); // execute function
