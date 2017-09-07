@@ -235,8 +235,7 @@ function displayPoints(data) {
 function responseCheck() {
   if (httpRequest.readyState === XMLHttpRequest.DONE) {
     if (httpRequest.status === 200) {
-      var response = JSON.parse(httpRequest.responseText);
-      displayPoints(response);
+      displayPoints(httpRequest.response);
     } else {
     }
   }
