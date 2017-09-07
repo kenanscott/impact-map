@@ -247,7 +247,15 @@ function get(url) {
   return new Promise(function(resolve, reject) {
     // Do the usual XHR stuff
     var req = new XMLHttpRequest();
-    req.open('GET', url);
+
+    var lastUpdatedString = '';
+    if (lastUpdated != null) {
+      lastUpdatedString = '?lastupdated=' + lastUpdated;
+    }
+
+    lastUpdated = new Date() / 1000;
+
+    req.open('GET', url + lastUpdatedString);
     req.setRequestHeader('Content-Type', 'application/json');
     req.onload = function() {
       // This is called even on 404 etc
@@ -275,14 +283,7 @@ function get(url) {
 function callPromise() {
   return new Promise(function(resolve, reject) {
 
-  var lastUpdatedString = '';
-  if (lastUpdated != null) {
-    lastUpdatedString = '?lastupdated=' + lastUpdated;
-  }
-
-  lastUpdated = new Date() / 1000;
-
-  get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function() {
+  get('/rest/live/read').then(JSON.parse).then(displayPoints).then(function() {
     console.log("callPromise Success!");
     resolve('Success!');
   }, function(error) {
