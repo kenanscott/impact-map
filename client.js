@@ -240,6 +240,7 @@ function displayPoints(data) {
 
 
 // Updates map with latest real time data
+// https://developers.google.com/web/fundamentals/getting-started/primers/promises
 function get(url) {
 
   // Return a new promise.
