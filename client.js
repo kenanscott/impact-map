@@ -243,35 +243,58 @@ function responseCheck() {
 
 
 // Updates map with latest real time data
-function updateMap() {
+function get(url) {
 
-  httpRequest = new XMLHttpRequest();
+  // Return a new promise.
+  return new Promise(function(resolve, reject) {
+    // Do the usual XHR stuff
+    var req = new XMLHttpRequest();
+    req.open('GET', url);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.onload = function() {
+      // This is called even on 404 etc
+      // so check the status
+      if (req.status == 200) {
+        // Resolve the promise with the response text
+        resolve(req.response);
+      }
+      else {
+        // Otherwise reject with the status text
+        // which will hopefully be a meaningful error
+        reject(Error(req.statusText));
+      }
+    };
 
-  if (!httpRequest) {
-    console.error('Giving up :( Cannot create an XMLHTTP instance');
-    return false;
-  }
+    // Handle network errors
+    req.onerror = function() {
+      reject(Error("Network Error"));
+    };
 
+    // Make the request
+    req.send();
+  });
+}
+
+function callPromise() {
   var lastUpdatedString = '';
   if (lastUpdated != null) {
     lastUpdatedString = '?lastupdated=' + lastUpdated;
   }
 
   lastUpdated = new Date() / 1000;
-
-  // Send API GET request for data
-  httpRequest.onreadystatechange = responseCheck;
-  httpRequest.open('GET', '/rest/live/read' + lastUpdatedString, true);
-  httpRequest.setRequestHeader('Content-Type', 'application/json');
-  httpRequest.send();
-
+  get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(function(response) {
+    console.log("Success!", response);
+  }, function(error) {
+    console.error("Failed!", error);
+  });
 }
+
 
 // https://gist.github.com/KartikTalwar/2306741
 function refreshData() {
   x = 3; // 3 Seconds
 
-  updateMap();
+  callPromise();
 
   setTimeout(refreshData, x * 1000);
 }
