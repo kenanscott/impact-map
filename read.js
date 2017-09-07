@@ -14,7 +14,7 @@ exports.handler = (event, context, callback) => {
   // Set the time to start scanning from to the beginning of the day in Mountain Time
   let startTime = todayEpoch + 21600;
   // If there is a lastupdated parameter, scan from that time
-  if (event.lastupdated > 1) {
+  if (Number(event.lastupdated) > 1) {
     console.log('Detecting lastupdated variable, ' + event.lastupdated);
     startTime = Number(event.lastupdated);
   }
