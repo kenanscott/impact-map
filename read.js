@@ -8,7 +8,7 @@ const moment = require('moment-timezone');
 
 exports.handler = (event, context, callback) => {
   // Set the epoch of the beginning of the day
-  let today = moment().tz('America/Denver');
+  const today = moment().tz('America/Denver');
   const todayEpoch = new Date(today.format('YYYY'), (today.format('MM') - 1), today.format('DD')).getTime() / 1000;
   console.log('UTC beginning of the day epoch = ' + todayEpoch);
   // Set the time to start scanning from to the beginning of the day in Mountain Time
