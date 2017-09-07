@@ -282,6 +282,7 @@ function callPromise() {
   }
 
   lastUpdated = new Date() / 1000;
+  
   get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(function(response) {
     console.log("Success!", response);
   }, function(error) {
