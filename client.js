@@ -204,41 +204,38 @@ var lastUpdated = null;
 
 // Displays the points data provided.
 function displayPoints(data) {
-  for (var i = 0; i < data.length; i++) {
 
-    // Create LatLng object
-    var LatLng = new google.maps.LatLng({
-      lat: data[i].Coordinates[0],
-      lng: data[i].Coordinates[1]
-    });
+  return new Promise(function(resolve, reject) {
 
-    var circle = new google.maps.Circle({
-      fillColor: pointStyles[data[i].Action].fillColor,
-      fillOpacity: pointStyles[data[i].Action].fillOpacity,
-      map: map,
-      center: LatLng,
-      radius: pointStyles[data[i].Action].radius,
-      strokeWeight: 0
-    });
+    for (var i = 0; i < data.length; i++) {
 
-    if (data[i].Action === 'view') {
-      pageviews++;
+      // Create LatLng object
+      var LatLng = new google.maps.LatLng({
+        lat: data[i].Coordinates[0],
+        lng: data[i].Coordinates[1]
+      });
+
+      var circle = new google.maps.Circle({
+        fillColor: pointStyles[data[i].Action].fillColor,
+        fillOpacity: pointStyles[data[i].Action].fillOpacity,
+        map: map,
+        center: LatLng,
+        radius: pointStyles[data[i].Action].radius,
+        strokeWeight: 0
+      });
+
+      if (data[i].Action === 'view') {
+        pageviews++;
+      }
+      if (data[i].Action === 'commitment') {
+        commitments++;
+      }
     }
-    if (data[i].Action === 'commitment') {
-      commitments++;
-    }
-  }
-  document.getElementById("pageviews").innerText = pageviews;
-  document.getElementById("commitments").innerText = commitments;
-}
+    document.getElementById("pageviews").innerText = pageviews;
+    document.getElementById("commitments").innerText = commitments;
+    resolve('All points processed');
+  });
 
-function responseCheck() {
-  if (httpRequest.readyState === XMLHttpRequest.DONE) {
-    if (httpRequest.status === 200) {
-      displayPoints(JSON.parse(httpRequest.response));
-    } else {
-    }
-  }
 }
 
 
@@ -257,8 +254,7 @@ function get(url) {
       if (req.status == 200) {
         // Resolve the promise with the response text
         resolve(req.response);
-      }
-      else {
+      } else {
         // Otherwise reject with the status text
         // which will hopefully be a meaningful error
         reject(Error(req.statusText));
@@ -282,9 +278,9 @@ function callPromise() {
   }
 
   lastUpdated = new Date() / 1000;
-  
-  get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(function(response) {
-    console.log("Success!", response);
+
+  get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function() {
+    console.log("Success!");
   }, function(error) {
     console.error("Failed!", error);
   });
