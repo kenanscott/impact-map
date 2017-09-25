@@ -24,7 +24,7 @@ function displayPoints(data) {
           minValue: 0,
           maxValue: 100
         },
-        region: '021',
+        region: 'world',
         displayMode: 'markers',
         colorAxis: {
           colors: ['#e7711c', '#4374e0']
