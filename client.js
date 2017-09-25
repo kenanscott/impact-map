@@ -8,6 +8,8 @@ function init() {
   table = new google.visualization.DataTable();
   table.addColumn('number', 'Lat');
   table.addColumn('number', 'Lng');
+  table.addColumn('number', 'Pageviews');
+  table.addColumn('number', 'Commitments');
   refreshData();
 }
 
@@ -16,7 +18,7 @@ function displayPoints(data) {
 
   return new Promise(function(resolve, reject) {
     for (var i = 0; i < data.length; i++) {
-      table.addRow([data[i].Coordinates[0], data[i].Coordinates[1]]);
+      table.addRow([data[i].Coordinates[0], data[i].Coordinates[1]], data[i].Action === 'pageview' ? 1 : 0, data[i].Action === 'commitment' ? 1 : 0);
       var options = {
         sizeAxis: {
           minValue: 0,
