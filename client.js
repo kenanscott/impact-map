@@ -3,7 +3,7 @@ var lastUpdated;
 var chart;
 
 function init() {
-  var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+  chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
   refreshData();
 }
 
