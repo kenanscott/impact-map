@@ -22,7 +22,7 @@ function displayPoints(data) {
       if (lookup.length > 0) {
         table.setCell(lookup[0], data[i].Action === 'commitment' ? 2 : 3, (table.getValue(lookup[0], data[i].Action === 'commitment' ? 2 : 3)) + 1);
       } else {
-      table.addRow([data[i].Coordinates[0], data[i].Coordinates[1], data[i].Action === 'commitment' ? 1 : 0, data[i].Coordinates[1], data[i].Action === 'view' ? 1 : 0]);
+      table.addRow([data[i].Coordinates[0], data[i].Coordinates[1], data[i].Action === 'commitment' ? 1 : 0, data[i].Action === 'view' ? 1 : 0]);
     }
       var options = {
         sizeAxis: {
