@@ -1,25 +1,21 @@
-var map = null;
 var legend = document.getElementById('legend');
 var lastUpdated;
+var chart;
 
-function initMap() {
-
-  google.charts.load('current', {
-    'packages': ['geochart'],
-    'mapsApiKey': 'AIzaSyDZPziPjsTK8hiOlr1W-uQiDjIRe87FFP4'
-  });
-
+function init() {
+  var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+  refreshData();
 }
 
 // Displays the points data provided.
 function displayPoints(data) {
 
   return new Promise(function(resolve, reject) {
-
+    var table = new google.visualization.DataTable();
+    table.addColumn('number', 'Lat');
+    table.addColumn('number', 'Lng');
     for (var i = 0; i < data.length; i++) {
-      google.visualization.arrayToDataTable([
-        [data[i].Coordinates[0], data[i].Coordinates[1]]
-      ]);
+      table.addRow([data[i].Coordinates[0], data[i].Coordinates[1]]);
       var options = {
         sizeAxis: {
           minValue: 0,
@@ -32,9 +28,7 @@ function displayPoints(data) {
         } // orange to blue
       };
 
-      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
-
-      chart.draw(data, options);
+      chart.draw(table, options);
     }
 
     resolve('All points processed');
@@ -106,5 +100,3 @@ function refreshData() {
     setTimeout(refreshData, x * 1000);
   });
 }
-
-refreshData(); // execute function

@@ -4,6 +4,8 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
   <title>Impact Map</title>
+  <!-- Load our client script -->
+  <script src="client.js"></script>
   <!-- Load CSS for this page -->
   <link rel="stylesheet" href="style.css" />
   <!-- Load Roboto font -->
@@ -13,6 +15,13 @@
   <script src="odometer.min.js"></script>
   <!-- Load Google Charts -->
   <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+  <script type="text/javascript">
+      google.charts.load('current', {
+        'packages':['geochart'],
+        'mapsApiKey': 'AIzaSyDZPziPjsTK8hiOlr1W-uQiDjIRe87FFP4'
+      });
+      google.charts.setOnLoadCallback(init);
+  </script>
 </head>
 
 <body>
@@ -29,8 +38,6 @@
     <p><span id="commitments" class="odometer">0</span> commitments to Christ
     </p>
   </div>
-  <!-- Load our client script -->
-  <script src="client.js"></script>
 </body>
 
 </html>
