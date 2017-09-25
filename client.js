@@ -5,9 +5,10 @@ var lastUpdated;
 function initMap() {
 
   google.charts.load('current', {
-  'packages': ['geochart'],
-  'mapsApiKey': 'AIzaSyDZPziPjsTK8hiOlr1W-uQiDjIRe87FFP4'
-});
+    'packages': ['geochart'],
+    'mapsApiKey': 'AIzaSyDZPziPjsTK8hiOlr1W-uQiDjIRe87FFP4'
+  });
+
 }
 
 // Displays the points data provided.
@@ -15,24 +16,29 @@ function displayPoints(data) {
 
   return new Promise(function(resolve, reject) {
 
- var data = google.visualization.arrayToDataTable([
-   ['Country',   'Population', 'Area Percentage'],
-   ['France',  65700000, 50],
-   ['Germany', 81890000, 27],
-   ['Poland',  38540000, 23]
- ]);
+    for (var i = 0; i < data.length; i++) {
+      google.visualization.arrayToDataTable([
+        [data[i].Coordinates[0], data[i].Coordinates[1]]
+      ]);
+      var options = {
+        sizeAxis: {
+          minValue: 0,
+          maxValue: 100
+        },
+        region: '021',
+        displayMode: 'markers',
+        colorAxis: {
+          colors: ['#e7711c', '#4374e0']
+        } // orange to blue
+      };
 
- var options = {
-   sizeAxis: { minValue: 0, maxValue: 100 },
-   region: '155', // Western Europe
-   displayMode: 'markers',
-   colorAxis: {colors: ['#e7711c', '#4374e0']} // orange to blue
- };
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
 
- var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
- chart.draw(data, options);
- resolve('All points processed');
-});
+      chart.draw(data, options);
+    }
+
+    resolve('All points processed');
+  });
 }
 
 // https://developers.google.com/web/fundamentals/getting-started/primers/promises
@@ -78,13 +84,13 @@ function get(url) {
 function callPromise() {
   return new Promise(function(resolve, reject) {
 
-  get('/rest/live/read').then(JSON.parse).then(displayPoints).then(function() {
-    console.log("callPromise Success!");
-    resolve('Success!');
-  }, function(error) {
-    console.error("callPromise Failed!", error);
-    reject(Error(error));
-  });
+    get('/rest/live/read').then(JSON.parse).then(displayPoints).then(function() {
+      console.log("callPromise Success!");
+      resolve('Success!');
+    }, function(error) {
+      console.error("callPromise Failed!", error);
+      reject(Error(error));
+    });
   });
 }
 
