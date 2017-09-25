@@ -8,8 +8,8 @@ function init() {
   table = new google.visualization.DataTable();
   table.addColumn('number', 'Lat');
   table.addColumn('number', 'Lng');
-  table.addColumn('number', 'Pageviews');
-  table.addColumn('number', 'Commitments');
+  table.addColumn('number', 'Commitments'); // Color
+  table.addColumn('number', 'Pageviews'); // Size
   refreshData();
 }
 
@@ -18,7 +18,12 @@ function displayPoints(data) {
 
   return new Promise(function(resolve, reject) {
     for (var i = 0; i < data.length; i++) {
-      table.addRow([data[i].Coordinates[0], data[i].Coordinates[1], data[i].Action === 'view' ? 1 : 0, data[i].Action === 'commitment' ? 1 : 0]);
+      var lookup = table.getFilteredRows([{column: 0, value: data[i].Coordinates[0]}, {column: 1, value: data[i].Coordinates[1]}]);
+      if (lookup.length > 0) {
+        table.setCell(lookup[0], data[i].Action === 'commitment' ? 2 : 3, (table.getValue(lookup[0], data[i].Action === 'commitment' ? 2 : 3)) + 1);
+      } else {
+      table.addRow([data[i].Coordinates[0], data[i].Coordinates[1], data[i].Action === 'commitment' ? 1 : 0, data[i].Coordinates[1], data[i].Action === 'view' ? 1 : 0]);
+    }
       var options = {
         sizeAxis: {
           minValue: 0,
@@ -27,8 +32,8 @@ function displayPoints(data) {
         region: 'world',
         displayMode: 'markers',
         colorAxis: {
-          colors: ['#e7711c', '#4374e0']
-        } // orange to blue
+          colors: ['#e7711c', '#4374e0'] // orange to blue
+        }
       };
 
       chart.draw(table, options);
