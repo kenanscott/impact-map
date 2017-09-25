@@ -1,12 +1,13 @@
 var legend = document.getElementById('legend');
 var lastUpdated;
 var chart;
-var table = new google.visualization.DataTable();
-table.addColumn('number', 'Lat');
-table.addColumn('number', 'Lng');
+var table;
 
 function init() {
   chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+  table = new google.visualization.DataTable();
+  table.addColumn('number', 'Lat');
+  table.addColumn('number', 'Lng');
   refreshData();
 }
 
