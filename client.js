@@ -18,7 +18,7 @@ function displayPoints(data) {
 
   return new Promise(function(resolve, reject) {
     for (var i = 0; i < data.length; i++) {
-      table.addRow([data[i].Coordinates[0], data[i].Coordinates[1]], data[i].Action === 'pageview' ? 1 : 0, data[i].Action === 'commitment' ? 1 : 0);
+      table.addRow([data[i].Coordinates[0], data[i].Coordinates[1], data[i].Action === 'view' ? 1 : 0, data[i].Action === 'commitment' ? 1 : 0]);
       var options = {
         sizeAxis: {
           minValue: 0,
