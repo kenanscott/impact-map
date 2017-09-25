@@ -32,7 +32,7 @@ function displayPoints(data) {
         region: 'world',
         displayMode: 'markers',
         colorAxis: {
-          colors: ['#0600E5', '#500091', '#62007C', '#750067', '#870052', '#9A003D', '#AC0028', '#BF0013'] // orange to blue
+          colors: ['#870052', '#9A003D', '#AC0028', '#BF0013']
         }
       };
 
