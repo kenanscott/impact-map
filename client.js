@@ -1,6 +1,9 @@
 var legend = document.getElementById('legend');
 var lastUpdated;
 var chart;
+var table = new google.visualization.DataTable();
+table.addColumn('number', 'Lat');
+table.addColumn('number', 'Lng');
 
 function init() {
   chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
@@ -11,9 +14,6 @@ function init() {
 function displayPoints(data) {
 
   return new Promise(function(resolve, reject) {
-    var table = new google.visualization.DataTable();
-    table.addColumn('number', 'Lat');
-    table.addColumn('number', 'Lng');
     for (var i = 0; i < data.length; i++) {
       table.addRow([data[i].Coordinates[0], data[i].Coordinates[1]]);
       var options = {
