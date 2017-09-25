@@ -31,8 +31,9 @@ function displayPoints(data) {
         },
         region: 'world',
         displayMode: 'markers',
+        datalessRegionColor: 'rgb(204, 204, 204)',
         colorAxis: {
-          colors: ['#FFA61A', '#FD911D', '#FB7C21', '#F96824', '#F75328', '#F63F2C']
+          colors: ['rgb(33, 150, 243)', 'rgb(63, 81, 181)', 'rgb(57, 73, 171)']
         }
       };
 
