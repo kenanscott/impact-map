@@ -16,183 +16,250 @@ function initMap() {
 
 }
 
-var styles = [{
+var styles = [
+  {
     "elementType": "geometry",
-    "stylers": [{
-      "color": "#f5f5f5"
-    }]
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
   },
   {
     "elementType": "labels.icon",
-    "stylers": [{
-      "visibility": "off"
-    }]
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
   },
   {
     "elementType": "labels.text.fill",
-    "stylers": [{
-      "color": "#616161"
-    }]
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
   },
   {
     "elementType": "labels.text.stroke",
-    "stylers": [{
-      "color": "#f5f5f5"
-    }]
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.country",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#666666"
+      }
+    ]
   },
   {
     "featureType": "administrative.land_parcel",
-    "stylers": [{
-      "visibility": "off"
-    }]
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
   },
   {
     "featureType": "administrative.land_parcel",
     "elementType": "labels.text.fill",
-    "stylers": [{
-      "color": "#bdbdbd"
-    }]
+    "stylers": [
+      {
+        "color": "#bdbdbd"
+      }
+    ]
   },
   {
     "featureType": "administrative.neighborhood",
-    "stylers": [{
-      "visibility": "off"
-    }]
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.province",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#808080"
+      }
+    ]
   },
   {
     "featureType": "poi",
     "elementType": "geometry",
-    "stylers": [{
-      "color": "#eeeeee"
-    }]
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
   },
   {
     "featureType": "poi",
     "elementType": "labels.text",
-    "stylers": [{
-      "visibility": "off"
-    }]
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
   },
   {
     "featureType": "poi",
     "elementType": "labels.text.fill",
-    "stylers": [{
-      "color": "#757575"
-    }]
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
   },
   {
     "featureType": "poi.park",
     "elementType": "geometry",
-    "stylers": [{
-      "color": "#e5e5e5"
-    }]
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
   },
   {
     "featureType": "poi.park",
     "elementType": "labels.text.fill",
-    "stylers": [{
-      "color": "#9e9e9e"
-    }]
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
   },
   {
     "featureType": "road",
-    "stylers": [{
-      "visibility": "off"
-    }]
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
   },
   {
     "featureType": "road",
     "elementType": "geometry",
-    "stylers": [{
-      "color": "#ffffff"
-    }]
+    "stylers": [
+      {
+        "color": "#ffffff"
+      }
+    ]
   },
   {
     "featureType": "road",
     "elementType": "labels",
-    "stylers": [{
-      "visibility": "off"
-    }]
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
   },
   {
     "featureType": "road.arterial",
     "elementType": "labels.text.fill",
-    "stylers": [{
-      "color": "#757575"
-    }]
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
   },
   {
     "featureType": "road.highway",
     "elementType": "geometry",
-    "stylers": [{
-      "color": "#dadada"
-    }]
+    "stylers": [
+      {
+        "color": "#dadada"
+      }
+    ]
   },
   {
     "featureType": "road.highway",
     "elementType": "labels.text.fill",
-    "stylers": [{
-      "color": "#616161"
-    }]
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
   },
   {
     "featureType": "road.local",
     "elementType": "labels.text.fill",
-    "stylers": [{
-      "color": "#9e9e9e"
-    }]
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
   },
   {
     "featureType": "transit.line",
     "elementType": "geometry",
-    "stylers": [{
-      "color": "#e5e5e5"
-    }]
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
   },
   {
     "featureType": "transit.station",
     "elementType": "geometry",
-    "stylers": [{
-      "color": "#eeeeee"
-    }]
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
   },
   {
     "featureType": "water",
     "elementType": "geometry",
-    "stylers": [{
-      "color": "#c9c9c9"
-    }]
+    "stylers": [
+      {
+        "color": "#c9c9c9"
+      }
+    ]
   },
   {
     "featureType": "water",
     "elementType": "labels.text",
-    "stylers": [{
-      "visibility": "off"
-    }]
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
   },
   {
     "featureType": "water",
     "elementType": "labels.text.fill",
-    "stylers": [{
-      "color": "#9e9e9e"
-    }]
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
   }
 ];
 
 
 var pointStyles = {
   'view': {
-    'color': '#000000',
-    'fillColor': '#000000',
-    'fillOpacity': 0.5,
+    'color': 'rgb(33, 150, 243)',
+    'fillColor': 'rgb(33, 150, 243)',
+    'fillOpacity': 0.2,
     'radius': 35000,
     'pane': 'overlayPane'
   },
   'commitment': {
-    'color': 'red',
-    'fillColor': '#f03',
-    'fillOpacity': 0.5,
-    'radius': 75000,
+    'color': 'rgb(29, 41, 114)',
+    'fillColor': 'rgb(29, 41, 114)',
+    'fillOpacity': 0.6,
+    'radius': 55000,
     'pane': 'markerPane'
   }
 };
@@ -247,15 +314,7 @@ function get(url) {
   return new Promise(function(resolve, reject) {
     // Do the usual XHR stuff
     var req = new XMLHttpRequest();
-
-    var lastUpdatedString = '';
-    if (lastUpdated != null) {
-      lastUpdatedString = '?lastupdated=' + lastUpdated;
-    }
-
-    lastUpdated = new Date() / 1000;
-
-    req.open('GET', url + lastUpdatedString);
+    req.open('GET', url);
     req.setRequestHeader('Content-Type', 'application/json');
     req.onload = function() {
       // This is called even on 404 etc
@@ -283,7 +342,14 @@ function get(url) {
 function callPromise() {
   return new Promise(function(resolve, reject) {
 
-  get('/rest/live/read').then(JSON.parse).then(displayPoints).then(function() {
+  var lastUpdatedString = '';
+  if (lastUpdated != null) {
+    lastUpdatedString = '?lastupdated=' + lastUpdated;
+  }
+
+  lastUpdated = new Date() / 1000;
+
+  get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function() {
     console.log("callPromise Success!");
     resolve('Success!');
   }, function(error) {
