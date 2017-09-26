@@ -182,17 +182,17 @@ var styles = [{
 
 var pointStyles = {
   'view': {
-    'color': '#000000',
-    'fillColor': '#000000',
-    'fillOpacity': 0.5,
+    'color': 'rgb(33, 150, 243)',
+    'fillColor': 'rgb(33, 150, 243)',
+    'fillOpacity': 0.2,
     'radius': 35000,
     'pane': 'overlayPane'
   },
   'commitment': {
-    'color': 'red',
-    'fillColor': '#f03',
+    'color': 'rgb(57, 73, 171)',
+    'fillColor': 'rgb(57, 73, 171)',
     'fillOpacity': 0.5,
-    'radius': 75000,
+    'radius': 35000,
     'pane': 'markerPane'
   }
 };
