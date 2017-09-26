@@ -256,9 +256,9 @@ var pointStyles = {
     'pane': 'overlayPane'
   },
   'commitment': {
-    'color': 'rgb(57, 73, 171)',
-    'fillColor': 'rgb(57, 73, 171)',
-    'fillOpacity': 0.5,
+    'color': 'rgb(29, 41, 114)',
+    'fillColor': 'rgb(29, 41, 114)',
+    'fillOpacity': 0.6,
     'radius': 35000,
     'pane': 'markerPane'
   }
