@@ -259,7 +259,7 @@ var pointStyles = {
     'color': 'rgb(29, 41, 114)',
     'fillColor': 'rgb(29, 41, 114)',
     'fillOpacity': 0.6,
-    'radius': 35000,
+    'radius': 55000,
     'pane': 'markerPane'
   }
 };
