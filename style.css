@@ -13,9 +13,8 @@ html, body, #map {
   background-color: rgb(243, 244, 242);
   padding: 10px;
   padding-right: 25px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
   text-align: left;
-  width: 20%;
 }
 
 #legend, p {
