@@ -13,7 +13,6 @@ html, body, #map {
   padding-right: 25px;
   font-family: 'Lato', sans-serif;
   text-align: left;
-  width: 20%;
   z-index: 0;
   position: absolute;
   top: 0px;
