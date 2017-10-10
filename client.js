@@ -320,6 +320,7 @@ function get(url) {
       // This is called even on 404 etc
       // so check the status
       if (req.status == 200) {
+        lastUpdated = new Date() / 1000;
         // Resolve the promise with the response text
         resolve(req.response);
       } else {
@@ -348,8 +349,6 @@ function callPromise() {
   if (lastUpdated != null) {
     lastUpdatedString = '?lastupdated=' + lastUpdated;
   }
-
-  lastUpdated = new Date() / 1000;
 
   get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function() {
     console.log("callPromise Success!");
