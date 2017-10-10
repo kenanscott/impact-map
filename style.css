@@ -27,3 +27,7 @@ html, body, #map {
 #legend, p {
   font-size: medium;
 }
+
+#status {
+  width: min-content;
+}
