@@ -15,6 +15,7 @@ html, body, #map {
   padding-right: 25px;
   font-family: 'Lato', sans-serif;
   text-align: left;
+  border-bottom-left-radius: 8px;
 }
 
 #legend h4 {
