@@ -1,3 +1,5 @@
+div#preload { display: none; }
+
 body {
     height: 100%;
     padding: 0;
@@ -18,4 +20,19 @@ html, body, #map {
 
 #legend, p {
   font-size: medium;
+}
+
+#status {
+  width: min-content;
+  display: inline;
+}
+
+#status img {
+  float: left;
+  padding-top: 15px;
+  padding-right: 8px;
+}
+
+#status p {
+  float: left;
 }
