@@ -327,12 +327,14 @@ function get(url) {
       } else {
         // Otherwise reject with the status text
         // which will hopefully be a meaningful error
+        statusBad('Disconnected, server error');
         reject(Error(req.statusText));
       }
     };
 
     // Handle network errors
     req.onerror = function() {
+      statusBad('Disconnected, network error');
       reject(Error("Network Error"));
     };
 
@@ -365,6 +367,7 @@ function refreshData() {
   x = 3; // 3 Seconds
 
   callPromise().then(function() {
+    statusGood('Map connected live');
     setTimeout(refreshData, x * 1000);
   }, function(error) {
     console.error(error);
