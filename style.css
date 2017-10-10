@@ -17,7 +17,11 @@ html, body, #map {
   text-align: left;
 }
 
-#legend, p {
+#legend h4 {
+  font-size: large;
+}
+
+#legend p {
   font-size: medium;
 }
 
