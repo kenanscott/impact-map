@@ -372,6 +372,7 @@ function refreshData() {
   });
 }
 
+// Set a timer to reload the page at midnight.
 // https://stackoverflow.com/questions/26387052/best-way-to-detect-midnight-and-reset-data
 setTimeout(
    midnightTask,
