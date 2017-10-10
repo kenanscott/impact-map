@@ -375,7 +375,7 @@ function refreshData() {
 // https://stackoverflow.com/questions/26387052/best-way-to-detect-midnight-and-reset-data
 setTimeout(
    midnightTask,
-   moment("24:00:00", "hh:mm:ss").diff(moment(), 'seconds')
+   moment("24:00:00", "hh:mm:ss").diff(moment(), 'milliseconds')
 );
 
 function midnightTask() {
