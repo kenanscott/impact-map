@@ -320,6 +320,8 @@ function get(url) {
       // This is called even on 404 etc
       // so check the status
       if (req.status == 200) {
+        // Set the last updated time
+        lastUpdated = new Date() / 1000;
         // Resolve the promise with the response text
         resolve(req.response);
       } else {
@@ -347,8 +349,6 @@ function callPromise() {
     lastUpdatedString = '?lastupdated=' + lastUpdated;
   }
 
-  lastUpdated = new Date() / 1000;
-
   get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function() {
     console.log("callPromise Success!");
     resolve('Success!');
@@ -370,6 +370,17 @@ function refreshData() {
     console.error(error);
     setTimeout(refreshData, x * 1000);
   });
+}
+
+// Set a timer to reload the page at midnight.
+// https://stackoverflow.com/questions/26387052/best-way-to-detect-midnight-and-reset-data
+setTimeout(
+   midnightTask,
+   moment("24:00:00", "hh:mm:ss").diff(moment(), 'milliseconds')
+);
+
+function midnightTask() {
+  window.location.reload(true);
 }
 
 refreshData(); // execute function

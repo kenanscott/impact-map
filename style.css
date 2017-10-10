@@ -10,10 +10,18 @@ html, body, #map {
 #legend {
   background-color: rgb(243, 244, 242);
   padding: 10px;
-  padding-right: 25px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Lato', sans-serif;
   text-align: left;
-  width: 20%;
+  z-index: 0;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  display: inline-block;
+  border-bottom-left-radius: 8px;
+}
+
+#legend, h4 {
+  font-size: large;
 }
 
 #legend, p {
