@@ -1,3 +1,5 @@
+#preload-01 { background: url(error.svg) no-repeat -9999px -9999px; }
+
 body {
     height: 100%;
     padding: 0;
