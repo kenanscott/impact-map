@@ -11,12 +11,14 @@ var messageDiv = document.getElementById('message-div');
 function statusGood(message) {
   lastStatus = new Date() / 1000;
   icon.src = 'check.svg';
+  icon.alt = 'Working';
   messageDiv.innerText = message;
 }
 
 function statusBad(message) {
   lastStatus = new Date() / 1000;
   icon.src = 'error.svg';
+  icon.alt = 'Error';
   messageDiv.innerText = message;
 }
 
