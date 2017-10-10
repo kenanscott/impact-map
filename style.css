@@ -17,6 +17,7 @@ html, body, #map {
   top: 0px;
   right: 0px;
   display: inline-block;
+  border-bottom-left-radius: 8px;
 }
 
 #legend, h4 {
