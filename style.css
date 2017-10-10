@@ -30,4 +30,15 @@ html, body, #map {
 
 #status {
   width: min-content;
+  display: inline;
+}
+
+#status img {
+  float: left;
+  padding-top: 15px;
+  padding-right: 8px;
+}
+
+#status p {
+  float: left;
 }
