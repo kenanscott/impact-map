@@ -12,18 +12,10 @@ html, body, #map {
 #legend {
   background-color: rgb(243, 244, 242);
   padding: 10px;
-  font-family: 'Lato', sans-serif;
+  padding-right: 25px;
+  font-family: 'Roboto', sans-serif;
   text-align: left;
-  z-index: 0;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  display: inline-block;
-  border-bottom-left-radius: 8px;
-}
-
-#legend, h4 {
-  font-size: large;
+  width: 20%;
 }
 
 #legend, p {
