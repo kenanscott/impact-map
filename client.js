@@ -325,12 +325,14 @@ function get(url) {
       } else {
         // Otherwise reject with the status text
         // which will hopefully be a meaningful error
+        statusBad('Disconnected, server error');
         reject(Error(req.statusText));
       }
     };
 
     // Handle network errors
     req.onerror = function() {
+      statusBad('Disconnected, network error');
       reject(Error("Network Error"));
     };
 
@@ -365,11 +367,23 @@ function refreshData() {
   x = 3; // 3 Seconds
 
   callPromise().then(function() {
+    statusGood('Map connected live');
     setTimeout(refreshData, x * 1000);
   }, function(error) {
     console.error(error);
     setTimeout(refreshData, x * 1000);
   });
+}
+
+// Set a timer to reload the page at midnight.
+// https://stackoverflow.com/questions/26387052/best-way-to-detect-midnight-and-reset-data
+setTimeout(
+   midnightTask,
+   moment("24:00:00", "hh:mm:ss").diff(moment().tz('America/Denver'), 'milliseconds')
+);
+
+function midnightTask() {
+  window.location.reload(true);
 }
 
 refreshData(); // execute function
