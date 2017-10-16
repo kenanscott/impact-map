@@ -13,7 +13,6 @@ function initMap() {
     zoom: 5
   });
   map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
-
 }
 
 var styles = [
