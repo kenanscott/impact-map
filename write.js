@@ -25,8 +25,8 @@ exports.handler = (event, context, callback) => {
   // Get ID for the item
   let id = makeId();
   // Set the current time and the time when the item should expire
-  const currentTime = Math.floor(new Date() / 1000);
-  const currentTimePlusTwentyFourHours = (Math.floor(new Date() / 1000)) + 86400;
+  const currentTime = Math.floor(new Date());
+  const currentTimePlusTwentyFourHours = (Math.floor(new Date())) + 86400;
   // Sets the parameters for writing to DynamoDB
   const params = {
     TableName: 'impact-map',
