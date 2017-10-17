@@ -22,40 +22,40 @@ exports.handler = (event, context, callback) => {
   console.log('Scanning from greater than ' + startTime);
   // Set scanning parameters
   var params = {
-    TableName: "impact-map",
+    TableName: 'impact-map',
     // Only get Coordinates and Action data from the table
-    ProjectionExpression: "Coordinates, #b",
+    ProjectionExpression: 'Coordinates, #b',
     // Only return items that have an Added time that is greater than startTime
-    FilterExpression: "Added > :start",
+    FilterExpression: 'Added > :start',
     ExpressionAttributeNames: {
-      // Set an "alias" for the word, "Action", because "Action" is a reserved word in DynamoDB
-      "#b": "Action"
+      // Set an 'alias' for the word, 'Action', because 'Action' is a reserved word in DynamoDB
+      '#b': 'Action'
     },
     ExpressionAttributeValues: {
-      // Set an "alias" for startTime, called ":start"
-      ":start": startTime
+      // Set an 'alias' for startTime, called ':start'
+      ':start': startTime
     }
   };
   // Create empty data variable which will later be returned to the client
   let combinedData = [];
 
-  console.log("Scanning table.");
+  console.log('Scanning table.');
   dynamodb.scan(params, onScan);
 
   function onScan(err, data) {
     // Log error if scanning returns err
     if (err) {
-      console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+      console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
     } else {
       // Add each returned item to the combinedData variable
-      console.log("Scan succeeded.");
+      console.log('Scan succeeded.');
       data.Items.forEach(function(item) {
         combinedData = combinedData.concat(item);
       });
 
       // Continue scanning if we have more items, because scan can retrieve a maximum of 1MB of data
-      if (typeof data.LastEvaluatedKey != "undefined") {
-        console.log("Scanning for more...");
+      if (typeof data.LastEvaluatedKey != 'undefined') {
+        console.log('Scanning for more...');
         params.ExclusiveStartKey = data.LastEvaluatedKey;
         dynamodb.scan(params, onScan);
       }
