@@ -19,6 +19,12 @@ exports.handler = (event, context, callback) => {
     startTime = Number(event.lastupdated);
   }
 
+  // Set scan limit to 20 if not present or greater than 20
+  let limit = 20;
+  if (Number(event.limit) < 20) {
+    limit = event.limit;
+  }
+
   console.log('Scanning from greater than ' + startTime);
   // Set scanning parameters
   var params = {
