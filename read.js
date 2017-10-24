@@ -9,7 +9,7 @@ const moment = require('moment-timezone');
 exports.handler = (event, context, callback) => {
 
   console.log(event.startTime);
-  
+
   // If there is a lastupdated parameter, scan from that time
   if (Number(event.lastupdated) > 1) {
     console.log('Detecting lastupdated variable, ' + event.lastupdated);
@@ -24,7 +24,7 @@ exports.handler = (event, context, callback) => {
 
   console.log('Scanning from greater than ' + startTime);
   // Set scanning parameters
-  var params = {
+  const params = {
     TableName: 'impact-map',
     // Only get Coordinates and Action data from the table
     ProjectionExpression: 'Coordinates, #b',
