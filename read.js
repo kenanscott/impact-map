@@ -9,8 +9,6 @@ const moment = require('moment-timezone');
 
 exports.handler = (event, context, callback) => {
 
-  console.log(event.startTime);
-
   let startTime;
   // If there is a lastupdated parameter, scan from that time
   if (Number(event.lastupdated) > 1) {
