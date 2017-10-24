@@ -16,233 +16,180 @@ function initMap() {
 
 }
 
-var styles = [
-  {
+var styles = [{
     "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#f5f5f5"
-      }
-    ]
+    "stylers": [{
+      "color": "#f5f5f5"
+    }]
   },
   {
     "elementType": "labels.icon",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
+    "stylers": [{
+      "visibility": "off"
+    }]
   },
   {
     "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
+    "stylers": [{
+      "color": "#616161"
+    }]
   },
   {
     "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#f5f5f5"
-      }
-    ]
+    "stylers": [{
+      "color": "#f5f5f5"
+    }]
   },
   {
     "featureType": "administrative.country",
     "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#666666"
-      }
-    ]
+    "stylers": [{
+      "color": "#666666"
+    }]
   },
   {
     "featureType": "administrative.land_parcel",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
+    "stylers": [{
+      "visibility": "off"
+    }]
   },
   {
     "featureType": "administrative.land_parcel",
     "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#bdbdbd"
-      }
-    ]
+    "stylers": [{
+      "color": "#bdbdbd"
+    }]
   },
   {
     "featureType": "administrative.neighborhood",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
+    "stylers": [{
+      "visibility": "off"
+    }]
   },
   {
     "featureType": "administrative.province",
     "elementType": "geometry.stroke",
-    "stylers": [
-      {
-        "color": "#808080"
-      }
-    ]
+    "stylers": [{
+      "color": "#808080"
+    }]
   },
   {
     "featureType": "poi",
     "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#eeeeee"
-      }
-    ]
+    "stylers": [{
+      "color": "#eeeeee"
+    }]
   },
   {
     "featureType": "poi",
     "elementType": "labels.text",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
+    "stylers": [{
+      "visibility": "off"
+    }]
   },
   {
     "featureType": "poi",
     "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
+    "stylers": [{
+      "color": "#757575"
+    }]
   },
   {
     "featureType": "poi.park",
     "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
+    "stylers": [{
+      "color": "#e5e5e5"
+    }]
   },
   {
     "featureType": "poi.park",
     "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
+    "stylers": [{
+      "color": "#9e9e9e"
+    }]
   },
   {
     "featureType": "road",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
+    "stylers": [{
+      "visibility": "off"
+    }]
   },
   {
     "featureType": "road",
     "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#ffffff"
-      }
-    ]
+    "stylers": [{
+      "color": "#ffffff"
+    }]
   },
   {
     "featureType": "road",
     "elementType": "labels",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
+    "stylers": [{
+      "visibility": "off"
+    }]
   },
   {
     "featureType": "road.arterial",
     "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
+    "stylers": [{
+      "color": "#757575"
+    }]
   },
   {
     "featureType": "road.highway",
     "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#dadada"
-      }
-    ]
+    "stylers": [{
+      "color": "#dadada"
+    }]
   },
   {
     "featureType": "road.highway",
     "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
+    "stylers": [{
+      "color": "#616161"
+    }]
   },
   {
     "featureType": "road.local",
     "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
+    "stylers": [{
+      "color": "#9e9e9e"
+    }]
   },
   {
     "featureType": "transit.line",
     "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
+    "stylers": [{
+      "color": "#e5e5e5"
+    }]
   },
   {
     "featureType": "transit.station",
     "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#eeeeee"
-      }
-    ]
+    "stylers": [{
+      "color": "#eeeeee"
+    }]
   },
   {
     "featureType": "water",
     "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#c9c9c9"
-      }
-    ]
+    "stylers": [{
+      "color": "#c9c9c9"
+    }]
   },
   {
     "featureType": "water",
     "elementType": "labels.text",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
+    "stylers": [{
+      "visibility": "off"
+    }]
   },
   {
     "featureType": "water",
     "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
+    "stylers": [{
+      "color": "#9e9e9e"
+    }]
   }
 ];
 
@@ -342,29 +289,50 @@ function get(url) {
   });
 }
 
-function callPromise() {
+function callPromise(lastEvaluatedKey) {
   return new Promise(function(resolve, reject) {
 
-  var lastUpdatedString = '';
-  if (lastUpdated != null) {
-    lastUpdatedString = '?lastupdated=' + lastUpdated;
-  }
+    var lastUpdatedString = '';
+    if (lastUpdated != null) {
+      lastUpdatedString = '?lastupdated=' + lastUpdated;
+    }
 
-  get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function() {
-    resolve('Success!');
-  }, function(error) {
-    console.error("callPromise Failed!", error);
-    reject(Error(error));
-  });
+    get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function(key) {
+      resolve('Success!');
+      if (typeof key !== 'undefined') {
+
+      }
+    }, function(error) {
+      console.error("callPromise Failed!", error);
+      reject(Error(error));
+    });
   });
 }
 
+function loop() {
+  return new Promise(function(resolve, reject) {
+
+  var lastEvaluatedKey = '';
+
+  do {
+    callPromise(lastEvaluatedKey).then(function(key) {
+      lastEvaluatedKey = key;
+    }, function(error) {
+      console.error(error);
+      reject(error);
+    });
+  } while (typeof key !== 'undefined');
+  resolve();
+
+  });
+}
 
 // https://gist.github.com/KartikTalwar/2306741
 function refreshData() {
   x = 3; // 3 Seconds
 
-  callPromise().then(function() {
+
+  loop().then(function() {
     statusGood('Map connected live');
     setTimeout(refreshData, x * 1000);
   }, function(error) {
@@ -376,8 +344,8 @@ function refreshData() {
 // Set a timer to reload the page at midnight.
 // https://stackoverflow.com/questions/26387052/best-way-to-detect-midnight-and-reset-data
 setTimeout(
-   midnightTask,
-   moment("24:00:00", "hh:mm:ss").diff(moment().tz('America/Denver'), 'milliseconds')
+  midnightTask,
+  moment("24:00:00", "hh:mm:ss").diff(moment().tz('America/Denver'), 'milliseconds')
 );
 
 function midnightTask() {
