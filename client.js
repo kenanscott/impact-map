@@ -351,7 +351,6 @@ function callPromise() {
   }
 
   get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function() {
-    console.log("callPromise Success!");
     resolve('Success!');
   }, function(error) {
     console.error("callPromise Failed!", error);
