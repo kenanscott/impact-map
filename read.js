@@ -11,10 +11,13 @@ exports.handler = (event, context, callback) => {
 
   console.log(event.startTime);
 
+  let startTime;
   // If there is a lastupdated parameter, scan from that time
   if (Number(event.lastupdated) > 1) {
     console.log('Detecting lastupdated variable, ' + event.lastupdated);
     startTime = Number(event.lastupdated);
+  } else {
+    startTime = 1;
   }
 
   // Set scan limit to 20 if not present or greater than 20
