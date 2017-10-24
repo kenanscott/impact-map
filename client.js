@@ -294,10 +294,15 @@ function callPromise(lastEvaluatedKey) {
 
     var lastUpdatedString = '';
     if (lastUpdated != null) {
-      lastUpdatedString = '?lastupdated=' + lastUpdated;
+      lastUpdatedString = 'lastupdated=' + lastUpdated + '&';
     }
 
-    get('/rest/live/read' + lastUpdatedString).then(JSON.parse).then(displayPoints).then(function(key) {
+    var lastEvaluatedKeyString = '';
+    if (lastEvaluatedKey != null) {
+      lastEvaluatedKeyString = '&lastEvaluatedKey=' + lastEvaluatedKey + '&';
+    }
+
+    get('/rest/live/read?' + lastUpdatedString + lastEvaluatedKeyString).then(JSON.parse).then(displayPoints).then(function(key) {
       resolve('Success!');
       if (typeof key !== 'undefined') {
 
