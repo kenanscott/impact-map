@@ -42,8 +42,8 @@ exports.handler = (event, context, callback) => {
     Limit: limit
   };
 
-  if (typeof event.LastEvaluatedKey != 'undefined') {
-    params.LastEvaluatedKey = event.LastEvaluatedKey;
+  if (typeof event.lastevaluatedkey != 'undefined') {
+    params.LastEvaluatedKey = event.lastevaluatedkey;
   }
 
   console.log('Scanning table.');
