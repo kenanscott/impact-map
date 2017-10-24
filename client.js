@@ -299,7 +299,7 @@ function callPromise(lastEvaluatedKey) {
 
     var lastEvaluatedKeyString = '';
     if (lastEvaluatedKey != null) {
-      lastEvaluatedKeyString = '&lastEvaluatedKey=' + lastEvaluatedKey + '&';
+      lastEvaluatedKeyString = '&lastevaluatedkey=' + lastEvaluatedKey + '&';
     }
 
     get('/rest/live/read?' + lastUpdatedString + lastEvaluatedKeyString).then(JSON.parse).then(displayPoints).then(function(key) {
