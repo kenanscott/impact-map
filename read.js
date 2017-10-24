@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-/* globals console, require*/
+/* globals console, require, exports*/
 'use strict';
 // Load required libraries
 const AWSXRay = require('aws-xray-sdk-core');
