@@ -37,7 +37,8 @@ exports.handler = (event, context, callback) => {
     ExpressionAttributeValues: {
       // Set an 'alias' for startTime, called ':start'
       ':start': startTime
-    }
+    },
+    Limit: limit
   };
   // Create empty data variable which will later be returned to the client
   let combinedData = [];
