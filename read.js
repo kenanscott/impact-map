@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */
+/* globals console */
 'use strict';
 // Load required libraries
 const AWSXRay = require('aws-xray-sdk-core');
@@ -24,7 +25,7 @@ exports.handler = (event, context, callback) => {
 
   console.log('Scanning from greater than ' + startTime);
   // Set scanning parameters
-  const params = {
+  let params = {
     TableName: 'impact-map',
     // Only get Coordinates and Action data from the table
     ProjectionExpression: 'Coordinates, #b',
@@ -40,8 +41,10 @@ exports.handler = (event, context, callback) => {
     },
     Limit: limit
   };
-  // Create empty data variable which will later be returned to the client
-  let combinedData = [];
+
+  if (typeof event.LastEvaluatedKey != 'undefined') {
+    params.LastEvaluatedKey = event.LastEvaluatedKey;
+  }
 
   console.log('Scanning table.');
   dynamodb.scan(params, onScan);
@@ -51,21 +54,14 @@ exports.handler = (event, context, callback) => {
     if (err) {
       console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
     } else {
-      // Add each returned item to the combinedData variable
       console.log('Scan succeeded.');
-      data.Items.forEach(function(item) {
-        combinedData = combinedData.concat(item);
-      });
-
       // Continue scanning if we have more items, because scan can retrieve a maximum of 1MB of data
       if (typeof data.LastEvaluatedKey != 'undefined') {
-        console.log('Scanning for more...');
-        params.ExclusiveStartKey = data.LastEvaluatedKey;
-        dynamodb.scan(params, onScan);
+        console.log('LastEvaluatedKey detected');
       }
       // Returns the item data back to the client
-      console.log('Returning ' + combinedData.length + ' items to the client')
-      callback(null, combinedData);
+      console.log('Returning ' + data.length + ' items to the client');
+      callback(null, data);
     }
   }
 };
