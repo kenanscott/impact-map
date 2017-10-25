@@ -215,6 +215,7 @@ var pageviews = 0;
 var commitments = 0;
 
 var lastUpdated = null;
+var lastEvaluatedKey;
 
 // Displays the points data provided.
 function displayPoints(data) {
@@ -317,13 +318,12 @@ function loop() {
   var lastEvaluatedKey = '';
 
   do {
-    callPromise(lastEvaluatedKey).then(function(key) {
-      lastEvaluatedKey = key;
+    callPromise(lastEvaluatedKey).then(function() {
     }, function(error) {
       console.error(error);
       reject(error);
     });
-  } while (typeof key !== 'undefined');
+  } while (typeof lastEvaluatedKey !== 'finished');
   resolve();
 
   });
