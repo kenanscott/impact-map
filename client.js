@@ -325,7 +325,7 @@ var promiseChain = {
 // https://gist.github.com/KartikTalwar/2306741
 function refreshData() {
   x = 3; // 3 Seconds
-  promiseChain();
+  promiseChain.runChain();
   setTimeout(refreshData, x * 1000);
 }
 
