@@ -222,6 +222,12 @@ function displayPoints(data) {
 
   return new Promise(function(resolve, reject) {
 
+    if (typeof lastEvaluatedKey !== 'undefined') {
+      lastEvaluatedKey = data.LastEvaluatedKey.Id;
+    } else {
+      lastEvaluatedKey = 'finished';
+    }
+
     for (var i = 0; i < data.length; i++) {
 
       // Create LatLng object
