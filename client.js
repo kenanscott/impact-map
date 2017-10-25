@@ -329,7 +329,7 @@ function loop() {
       console.error(error);
       reject(error);
     });
-  } while (typeof lastEvaluatedKey !== 'finished');
+  } while (lastEvaluatedKey !== 'finished');
   resolve();
 
   });
