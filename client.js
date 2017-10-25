@@ -296,9 +296,11 @@ function get(url) {
   });
 }
 
-function callPromise(lastEvaluatedKey) {
-  return new Promise(function(resolve, reject) {
-
+// https://medium.com/adobe-io/how-to-combine-rest-api-calls-with-javascript-promises-in-node-js-or-openwhisk-d96cbc10f299
+// https://gist.github.com/trieloff/168312d4dd4d149afdd55cde3d3724cabea
+var promiseChain = {
+  runChain: function() {
+    return new Promise(function(resolve, reject) {
     var lastUpdatedString = '';
     if (lastUpdated != null) {
       lastUpdatedString = 'lastupdated=' + lastUpdated + '&';
@@ -310,43 +312,21 @@ function callPromise(lastEvaluatedKey) {
     }
 
     get('/rest/live/read?' + lastUpdatedString + lastEvaluatedKeyString).then(JSON.parse).then(displayPoints).then(function() {
-      resolve('Success!');
+      if (lastEvaluatedKey !== 'finished') promiseChain.runChain();
+      else resolve('done');
     }, function(error) {
       console.error("callPromise Failed!", error);
       reject(Error(error));
     });
-  });
-}
-
-function loop() {
-  return new Promise(function(resolve, reject) {
-
-  var lastEvaluatedKey = '';
-
-  do {
-    callPromise(lastEvaluatedKey).then(function() {
-    }, function(error) {
-      console.error(error);
-      reject(error);
     });
-  } while (lastEvaluatedKey !== 'finished');
-  resolve();
-
-  });
-}
+  }
+};
 
 // https://gist.github.com/KartikTalwar/2306741
 function refreshData() {
   x = 3; // 3 Seconds
-
-
-  loop().then(function() {
-    statusGood('Map connected live');
-    setTimeout(refreshData, x * 1000);
-  }, function(error) {
-    console.error(error);
-    setTimeout(refreshData, x * 1000);
-  });
+  promiseChain();
+  setTimeout(refreshData, x * 1000);
 }
 
 // Set a timer to reload the page at midnight.
