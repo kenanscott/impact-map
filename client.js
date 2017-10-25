@@ -302,11 +302,8 @@ function callPromise(lastEvaluatedKey) {
       lastEvaluatedKeyString = '&lastevaluatedkey=' + lastEvaluatedKey + '&';
     }
 
-    get('/rest/live/read?' + lastUpdatedString + lastEvaluatedKeyString).then(JSON.parse).then(displayPoints).then(function(key) {
+    get('/rest/live/read?' + lastUpdatedString + lastEvaluatedKeyString).then(JSON.parse).then(displayPoints).then(function() {
       resolve('Success!');
-      if (typeof key !== 'undefined') {
-
-      }
     }, function(error) {
       console.error("callPromise Failed!", error);
       reject(Error(error));
