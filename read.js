@@ -23,6 +23,7 @@ exports.handler = (event, context, callback) => {
   // Set scan limit to 20 if not present or greater than 20
   let limit = 20;
   if (Number(event.limit) < 20) {
+    console.log('Detecting limit variable ' + event.limit);
     limit = event.limit;
   }
 
@@ -46,8 +47,11 @@ exports.handler = (event, context, callback) => {
   };
 
   if (typeof event.lastevaluatedkey != 'undefined') {
+    console.log('lastevaluatedkey detected ' + event.lastevaluatedkey);
     params.LastEvaluatedKey = event.lastevaluatedkey;
   }
+
+  console.log(params);
 
   console.log('Scanning table.');
   dynamodb.scan(params, onScan);
