@@ -350,12 +350,18 @@ var promiseChain = {
   } // runChain
 }; // promiseChain
 
-// Set a timer to reload the page at midnight.
-// https://stackoverflow.com/questions/26387052/best-way-to-detect-midnight-and-reset-data
+var midnight = new Date();
+midnight.setDate(new Date().getDate()+1);
+midnight.setHours(0,0,0,0);
+midnight = midnight / 1000;
+var now = new Date() / 1000;
+midnight = midnight - now;
+midnight = midnight + 5; // Add 5 seconds as a cushion
 setTimeout(
   midnightTask,
-  moment("24:00:00", "hh:mm:ss").diff(moment().tz('America/Denver'), 'milliseconds')
+  midnight
 );
+
 
 function midnightTask() {
   window.location.reload(true);
