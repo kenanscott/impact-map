@@ -48,6 +48,7 @@ exports.handler = (event, context, callback) => {
 
   if (event.hasOwnProperty('exclusivestartkey') && event.exclusivestartkey !== '') {
     console.log('exclusivestartkey detected ' + event.exclusivestartkey);
+    params.ExclusiveStartKey = {};
     params.ExclusiveStartKey.Id = event.exclusivestartkey;
   }
 
