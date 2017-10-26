@@ -326,6 +326,7 @@ var promiseChain = {
       if (lastEvaluatedKey !== 'finished') {
         promiseChain.runChain();
       } else {
+        statusGood('Map connected live');
         return delay(3000).then(function() {
           promiseChain.runChain();
         });
