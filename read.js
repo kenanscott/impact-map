@@ -21,6 +21,7 @@ exports.handler = (event, context, callback) => {
   // Set scan limit to 20 if not present or greater than 20
   let limit = 20;
   if (Number(event.limit) < 20) {
+    console.log('Detecting limit variable ' + event.limit);
     limit = event.limit;
   }
 
@@ -43,9 +44,13 @@ exports.handler = (event, context, callback) => {
     Limit: limit
   };
 
-  if (typeof event.lastevaluatedkey != 'undefined') {
-    params.LastEvaluatedKey = event.lastevaluatedkey;
+  if (event.hasOwnProperty('exclusivestartkey') && event.exclusivestartkey !== '') {
+    console.log('exclusivestartkey detected ' + event.exclusivestartkey);
+    params.ExclusiveStartKey = {};
+    params.ExclusiveStartKey.Id = event.exclusivestartkey;
   }
+
+  console.log(params);
 
   console.log('Scanning table.');
   dynamodb.scan(params, onScan);
@@ -61,7 +66,7 @@ exports.handler = (event, context, callback) => {
         console.log('LastEvaluatedKey detected');
       }
       // Returns the item data back to the client
-      console.log('Returning ' + data.length + ' items to the client');
+      console.log('Returning ' + data.Items.length + ' items to the client');
       callback(null, data);
     }
   }
