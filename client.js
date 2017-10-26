@@ -359,7 +359,7 @@ midnight = midnight - now;
 midnight = midnight + 5; // Add 5 seconds as a cushion
 setTimeout(
   midnightTask,
-  midnight
+  midnight * 1000
 );
 
 
