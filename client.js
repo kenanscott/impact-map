@@ -303,7 +303,10 @@ var promiseChain = {
     return new Promise(function(resolve, reject) {
     var timeString = '';
     if (from == null) {
-      timeString = 'from=' + (new Date().setHours(0,0,0,0).getTime() / 1000) + '&'; // If from is not set, set to midnight local time in seconds (accurate to the millisecond)
+      var d = new Date();
+      d.setHours(0,0,0,0);
+      d = d.getTime() / 1000;
+      timeString = 'from=' + d + '&'; // If from is not set, set to midnight local time in seconds (accurate to the millisecond)
     }
 
     var exclusiveStartKeyString = '';
