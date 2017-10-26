@@ -310,7 +310,7 @@ var promiseChain = {
     }
 
     var exclusiveStartKeyString = '';
-    if (lastEvaluatedKey != null) {
+    if (lastEvaluatedKey != null || lastEvaluatedKey != 'finished') {
       exclusiveStartKeyString = '&exclusivestartkey=' + lastEvaluatedKey + '&';
     }
 
@@ -318,6 +318,7 @@ var promiseChain = {
       if (lastEvaluatedKey !== 'finished') {
         promiseChain.runChain();
       } else {
+
         from = new Date();
         resolve('done');
       }
