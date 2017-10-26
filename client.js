@@ -232,23 +232,23 @@ function displayPoints(data) {
 
       // Create LatLng object
       var LatLng = new google.maps.LatLng({
-        lat: data[i].Coordinates[0],
-        lng: data[i].Coordinates[1]
+        lat: data.Items[i].Coordinates[0],
+        lng: data.Items[i].Coordinates[1]
       });
 
       var circle = new google.maps.Circle({
-        fillColor: pointStyles[data[i].Action].fillColor,
-        fillOpacity: pointStyles[data[i].Action].fillOpacity,
+        fillColor: pointStyles[data.Items[i].Action].fillColor,
+        fillOpacity: pointStyles[data.Items[i].Action].fillOpacity,
         map: map,
         center: LatLng,
-        radius: pointStyles[data[i].Action].radius,
+        radius: pointStyles[data.Items[i].Action].radius,
         strokeWeight: 0
       });
 
-      if (data[i].Action === 'view') {
+      if (data.Items[i].Action === 'view') {
         pageviews++;
       }
-      if (data[i].Action === 'commitment') {
+      if (data.Items[i].Action === 'commitment') {
         commitments++;
       }
     }
