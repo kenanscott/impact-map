@@ -227,6 +227,7 @@ function displayPoints(data) {
       lastEvaluatedKey = data.LastEvaluatedKey.Id;
     } else {
       lastEvaluatedKey = 'finished';
+      from = new Date() / 1000;
     }
 
     for (var i = 0; i < data.Items.length; i++) {
@@ -307,6 +308,8 @@ var promiseChain = {
       d.setHours(0,0,0,0);
       d = d.getTime() / 1000;
       timeString = 'from=' + d + '&'; // If from is not set, set to midnight local time in seconds (accurate to the millisecond)
+    } else {
+      timeString = 'from=' + from + '&';
     }
 
     var exclusiveStartKeyString = '';
@@ -328,8 +331,6 @@ var promiseChain = {
 if (lastEvaluatedKey !== 'finished') {
   promiseChain.runChain();
 } else {
-
-  from = new Date();
   resolve('done');
 }
 
