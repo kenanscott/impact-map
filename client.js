@@ -228,8 +228,7 @@ function displayPoints(data) {
       lastEvaluatedKey = data.LastEvaluatedKey.Id;
     } else {
       lastEvaluatedKey = 'finished';
-      from = new Date() / 1000;
-    }
+     }
 
     for (var i = 0; i < data.Items.length; i++) {
 
