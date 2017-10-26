@@ -80,7 +80,7 @@ exports.handler = (event, context, callback) => {
       document.addAnnotation("scanned", "data.Count");
 
       // Returns the item data back to the client
-      console.log('Returning ' + data.Items.length + ' items to the client');
+      console.log('Returning ' + data.Items.Count + ' items to the client');
       callback(null, data);
     }
   }
