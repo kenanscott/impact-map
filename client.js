@@ -317,12 +317,12 @@ var promiseChain = {
       if (to === null) {
         to = new Date() / 1000;
       }
-      timeString = 'from=' + d + '&to=' + to; // If from is not set, set to midnight local time in seconds (accurate to the millisecond)
+      timeString = 'from=' + d + '&to=' + to + '&'; // If from is not set, set to midnight local time in seconds (accurate to the millisecond)
     } else {
       if (to === null) {
         to = new Date() / 1000;
       }
-      timeString = 'from=' + from + '&to=' + to;
+      timeString = 'from=' + from + '&to=' + to + '&';
     }
 
     var exclusiveStartKeyString = '';
