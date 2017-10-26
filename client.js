@@ -319,7 +319,7 @@ var promiseChain = {
 
     var exclusiveStartKeyString = '';
     if (lastEvaluatedKey != undefined && lastEvaluatedKey != 'finished') {
-      exclusiveStartKeyString = '&exclusivestartkey=' + lastEvaluatedKey + '&';
+      exclusiveStartKeyString = 'exclusivestartkey=' + lastEvaluatedKey;
     }
 
     get('/rest/live/read?' + timeString + exclusiveStartKeyString).then(JSON.parse).then(displayPoints).then(function() {
