@@ -214,7 +214,7 @@ var pointStyles = {
 var pageviews = 0;
 var commitments = 0;
 
-var from;
+var from = null;
 var to = null;
 
 var lastEvaluatedKey;
@@ -309,7 +309,7 @@ function delay(t) {
 var promiseChain = {
   runChain: function() {
     var timeString = '';
-    if (from == null) {
+    if (from === null) {
       var d = new Date();
       d.setHours(0, 0, 0, 0);
       d = d.getTime() / 1000;
