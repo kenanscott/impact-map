@@ -315,20 +315,23 @@ var promiseChain = {
     }
 
     get('/rest/live/read?' + timeString + exclusiveStartKeyString).then(JSON.parse).then(displayPoints).then(function() {
-      if (lastEvaluatedKey !== 'finished') {
-        promiseChain.runChain();
-      } else {
 
-        from = new Date();
-        resolve('done');
-      }
     }, function(error) {
       console.error("callPromise Failed!", error);
       reject(Error(error));
-  });
-});
+
+    }); // Anonymous function
+    }); // Promise wrapper
+    } // runChain
+  }; // promiseChain
+
+if (lastEvaluatedKey !== 'finished') {
+  promiseChain.runChain();
+} else {
+
+  from = new Date();
+  resolve('done');
 }
-};
 
 // https://gist.github.com/KartikTalwar/2306741
 function refreshData() {
