@@ -77,8 +77,8 @@ exports.handler = (event, context, callback) => {
 
       // Adds X-Ray annotations
       let document = AWSXRay.getSegment();
-      document.addAnnotation("scanned", "data.ScannedCount");
-      document.addAnnotation("scanned", "data.Count");
+      document.addAnnotation('scanned', 'data.ScannedCount');
+      document.addAnnotation('scanned', 'data.Count');
 
       // Returns the item data back to the client
       console.log('Returning ' + data.Items.Count + ' items to the client');
