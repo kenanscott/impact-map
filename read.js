@@ -9,13 +9,13 @@ const moment = require('moment-timezone');
 
 exports.handler = (event, context, callback) => {
 
-  let startTime;
+  let from;
   // If there is a lastupdated parameter, scan from that time
-  if (Number(event.lastupdated) > 1) {
-    console.log('Detecting lastupdated variable, ' + event.lastupdated);
-    startTime = Number(event.lastupdated);
+  if (Number(event.from) > 1) {
+    console.log('Detecting from variable, ' + event.from);
+    from = Number(event.from);
   } else {
-    startTime = 1;
+    from = 1;
   }
 
   // Set scan limit to 20 if not present or greater than 20
@@ -25,7 +25,7 @@ exports.handler = (event, context, callback) => {
     limit = event.limit;
   }
 
-  console.log('Scanning from greater than ' + startTime);
+  console.log('Scanning from greater than ' + from);
   // Set scanning parameters
   let params = {
     TableName: 'impact-map',
@@ -39,7 +39,7 @@ exports.handler = (event, context, callback) => {
     },
     ExpressionAttributeValues: {
       // Set an 'alias' for startTime, called ':start'
-      ':start': startTime
+      ':start': from
     },
     Limit: limit
   };
