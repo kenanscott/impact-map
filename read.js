@@ -62,7 +62,7 @@ exports.handler = (event, context, callback) => {
     } else {
       console.log('Scan succeeded.');
       // Continue scanning if we have more items, because scan can retrieve a maximum of 1MB of data
-      if (typeof data.LastEvaluatedKey != 'undefined') {
+      if (data.hasOwnProperty('LastEvaluatedKey')) {
         console.log('LastEvaluatedKey detected');
       }
       // Returns the item data back to the client
