@@ -46,7 +46,7 @@ exports.handler = (event, context, callback) => {
     Limit: limit
   };
 
-  if (event.exclusivestartkey.length > 1) {
+  if (event.hasOwnProperty('exclusivestartkey') && event.exclusivestartkey !== '') {
     console.log('exclusivestartkey detected ' + event.exclusivestartkey);
     params.ExclusiveStartKey.Id = event.exclusivestartkey;
   }
