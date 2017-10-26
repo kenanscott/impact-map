@@ -228,7 +228,7 @@ function displayPoints(data) {
       lastEvaluatedKey = 'finished';
     }
 
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < data.Items.length; i++) {
 
       // Create LatLng object
       var LatLng = new google.maps.LatLng({
