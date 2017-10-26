@@ -335,8 +335,9 @@ var promiseChain = {
 // https://gist.github.com/KartikTalwar/2306741
 function refreshData() {
   x = 3; // 3 Seconds
-  promiseChain.runChain();
-  setTimeout(refreshData, x * 1000);
+  promiseChain.runChain().then(function() {
+    setTimeout(refreshData, x * 1000);
+  });
 }
 
 // Set a timer to reload the page at midnight.
