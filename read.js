@@ -46,9 +46,9 @@ exports.handler = (event, context, callback) => {
     Limit: limit
   };
 
-  if (event.lastevaluatedkey.length > 1) {
-    console.log('lastevaluatedkey detected ' + event.lastevaluatedkey);
-    params.LastEvaluatedKey = event.lastevaluatedkey;
+  if (event.exclusivestartkey.length > 1) {
+    console.log('exclusivestartkey detected ' + event.exclusivestartkey);
+    params.ExclusiveStartKey.Id = event.exclusivestartkey;
   }
 
   console.log(params);

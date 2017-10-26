@@ -306,12 +306,12 @@ var promiseChain = {
       lastUpdatedString = 'lastupdated=' + lastUpdated + '&';
     }
 
-    var lastEvaluatedKeyString = '';
+    var exclusiveStartKeyString = '';
     if (lastEvaluatedKey != null) {
-      lastEvaluatedKeyString = '&lastevaluatedkey=' + lastEvaluatedKey + '&';
+      exclusiveStartKeyString = '&exclusivestartkey=' + lastEvaluatedKey + '&';
     }
 
-    get('/rest/live/read?' + lastUpdatedString + lastEvaluatedKeyString).then(JSON.parse).then(displayPoints).then(function() {
+    get('/rest/live/read?' + lastUpdatedString + exclusiveStartKeyString).then(JSON.parse).then(displayPoints).then(function() {
       if (lastEvaluatedKey !== 'finished') promiseChain.runChain();
       else resolve('done');
     }, function(error) {
