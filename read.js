@@ -73,6 +73,12 @@ exports.handler = (event, context, callback) => {
       if (data.hasOwnProperty('LastEvaluatedKey')) {
         console.log('LastEvaluatedKey detected');
       }
+
+      // Adds X-Ray annotations
+      let document = AWSXRay.getSegment();
+      document.addAnnotation("scanned", "data.ScannedCount");
+      document.addAnnotation("scanned", "data.Count");
+
       // Returns the item data back to the client
       console.log('Returning ' + data.Items.length + ' items to the client');
       callback(null, data);
