@@ -215,7 +215,7 @@ var pageviews = 0;
 var commitments = 0;
 
 var from;
-var to;
+var to = null;
 
 var lastEvaluatedKey;
 
