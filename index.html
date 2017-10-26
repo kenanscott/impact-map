@@ -8,13 +8,13 @@
   <title>Impact Map</title>
   <!-- Load CSS for this page -->
   <link rel="stylesheet" href="style.css" />
+  <!-- Load favicon -->
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <!-- Load Roboto font -->
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <!-- Load odometer -->
   <link rel="stylesheet" href="libraries/odometer-theme-default.css" />
   <script src="libraries/odometer.min.js"></script>
-  <script src="libraries/moment.min.js"></script>
-  <script src="libraries/moment-timezone-with-data.min.js"></script>
 </head>
 
 <body>
@@ -26,8 +26,8 @@
     <div id="status"></div>
   </div>
   <!-- Load our client scripts -->
-  <script src="client.js"></script>
   <script src="status.js"></script>
+  <script src="client.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZPziPjsTK8hiOlr1W-uQiDjIRe87FFP4&callback=initMap" async defer></script>
   <div id="preload">
      <img alt="Error" src="error.svg" width="1" height="1"/>
