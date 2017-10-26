@@ -75,11 +75,6 @@ exports.handler = (event, context, callback) => {
         console.log('LastEvaluatedKey detected');
       }
 
-      // Adds X-Ray annotations
-      let document = AWSXRay.getSegment();
-      document.addAnnotation('scanned', 'data.ScannedCount');
-      document.addAnnotation('scanned', 'data.Count');
-
       // Returns the item data back to the client
       console.log('Returning ' + data.Items.Count + ' items to the client');
       callback(null, data);
