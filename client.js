@@ -214,7 +214,8 @@ var pointStyles = {
 var pageviews = 0;
 var commitments = 0;
 
-var lastUpdated = null;
+var from;
+
 var lastEvaluatedKey;
 
 // Displays the points data provided.
@@ -300,9 +301,9 @@ function get(url) {
 var promiseChain = {
   runChain: function() {
     return new Promise(function(resolve, reject) {
-    var lastUpdatedString = '';
-    if (lastUpdated != null) {
-      lastUpdatedString = 'lastupdated=' + lastUpdated + '&';
+    var timeString = '';
+    if (from == null) {
+      timeString = 'from=' + (new Date().setHours(0,0,0,0).getTime() / 1000) + '&'; // If from is not set, set to midnight local time in seconds (accurate to the millisecond)
     }
 
     var exclusiveStartKeyString = '';
@@ -310,11 +311,11 @@ var promiseChain = {
       exclusiveStartKeyString = '&exclusivestartkey=' + lastEvaluatedKey + '&';
     }
 
-    get('/rest/live/read?' + lastUpdatedString + exclusiveStartKeyString).then(JSON.parse).then(displayPoints).then(function() {
+    get('/rest/live/read?' + timeString + exclusiveStartKeyString).then(JSON.parse).then(displayPoints).then(function() {
       if (lastEvaluatedKey !== 'finished') {
         promiseChain.runChain();
       } else {
-        lastUpdated = new Date();
+        from = new Date();
         resolve('done');
       }
     }, function(error) {
