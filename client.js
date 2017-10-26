@@ -222,7 +222,7 @@ function displayPoints(data) {
 
   return new Promise(function(resolve, reject) {
 
-    if (typeof data.LastEvaluatedKey.Id !== 'undefined') {
+    if (data.hasOwnProperty('LastEvaluatedKey')) {
       lastEvaluatedKey = data.LastEvaluatedKey.Id;
     } else {
       lastEvaluatedKey = 'finished';
