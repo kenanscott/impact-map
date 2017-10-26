@@ -297,11 +297,16 @@ function get(url) {
   });
 }
 
+function delay(t) {
+   return new Promise(function(resolve) {
+       setTimeout(resolve, t);
+   });
+}
+
 // https://medium.com/adobe-io/how-to-combine-rest-api-calls-with-javascript-promises-in-node-js-or-openwhisk-d96cbc10f299
 // https://gist.github.com/trieloff/168312d4dd4d149afdd55cde3d3724cabea
 var promiseChain = {
   runChain: function() {
-    return new Promise(function(resolve, reject) {
     var timeString = '';
     if (from == null) {
       var d = new Date();
@@ -321,24 +326,18 @@ var promiseChain = {
       if (lastEvaluatedKey !== 'finished') {
         promiseChain.runChain();
       } else {
-        resolve('done');
+        return delay(3000).then(function() {
+          promiseChain.runChain();
+        });
       }
     }, function(error) {
       console.error("callPromise Failed!", error);
-      reject(Error(error));
-
+      return delay(3000).then(function() {
+        promiseChain.runChain();
+      });
     }); // Anonymous function
-    }); // Promise wrapper
     } // runChain
   }; // promiseChain
-
-// https://gist.github.com/KartikTalwar/2306741
-function refreshData() {
-  x = 3; // 3 Seconds
-  promiseChain.runChain().then(function() {
-    setTimeout(refreshData, x * 1000);
-  });
-}
 
 // Set a timer to reload the page at midnight.
 // https://stackoverflow.com/questions/26387052/best-way-to-detect-midnight-and-reset-data
@@ -351,4 +350,4 @@ function midnightTask() {
   window.location.reload(true);
 }
 
-refreshData(); // execute function
+promiseChain.runChain(); // execute function
