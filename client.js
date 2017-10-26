@@ -310,7 +310,7 @@ var promiseChain = {
     }
 
     var exclusiveStartKeyString = '';
-    if (lastEvaluatedKey != undefined || lastEvaluatedKey != 'finished') {
+    if (lastEvaluatedKey != undefined && lastEvaluatedKey != 'finished') {
       exclusiveStartKeyString = '&exclusivestartkey=' + lastEvaluatedKey + '&';
     }
 
