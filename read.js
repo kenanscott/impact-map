@@ -10,12 +10,19 @@ const moment = require('moment-timezone');
 exports.handler = (event, context, callback) => {
 
   let from;
-  // If there is a lastupdated parameter, scan from that time
   if (Number(event.from) > 1) {
     console.log('Detecting from variable, ' + event.from);
     from = Number(event.from);
   } else {
     from = 1;
+  }
+
+  let to;
+  if (Number(event.to) > 1) {
+    console.log('Detecting to variable, ' + event.to);
+    to = Number(event.to);
+  } else {
+    to = new Date() / 1000; // If to isn't present, default to current time
   }
 
   // Set scan limit to 20 if not present or greater than 20
@@ -31,15 +38,16 @@ exports.handler = (event, context, callback) => {
     TableName: 'impact-map',
     // Only get Coordinates and Action data from the table
     ProjectionExpression: 'Coordinates, #b',
-    // Only return items that have an Added time that is greater than startTime
-    FilterExpression: 'Added > :start',
+    // Only return items that fall within start and stop parameters
+    FilterExpression: ':start <= Added >= :stop',
     ExpressionAttributeNames: {
       // Set an 'alias' for the word, 'Action', because 'Action' is a reserved word in DynamoDB
       '#b': 'Action'
     },
     ExpressionAttributeValues: {
-      // Set an 'alias' for startTime, called ':start'
-      ':start': from
+      // Set an 'alias' for start and stop variables
+      ':start': from,
+      ':stop': to
     },
     Limit: limit
   };

@@ -215,6 +215,7 @@ var pageviews = 0;
 var commitments = 0;
 
 var from;
+var to;
 
 var lastEvaluatedKey;
 
@@ -298,9 +299,9 @@ function get(url) {
 }
 
 function delay(t) {
-   return new Promise(function(resolve) {
-       setTimeout(resolve, t);
-   });
+  return new Promise(function(resolve) {
+    setTimeout(resolve, t);
+  });
 }
 
 // https://medium.com/adobe-io/how-to-combine-rest-api-calls-with-javascript-promises-in-node-js-or-openwhisk-d96cbc10f299
@@ -310,11 +311,18 @@ var promiseChain = {
     var timeString = '';
     if (from == null) {
       var d = new Date();
-      d.setHours(0,0,0,0);
+      d.setHours(0, 0, 0, 0);
       d = d.getTime() / 1000;
-      timeString = 'from=' + d + '&'; // If from is not set, set to midnight local time in seconds (accurate to the millisecond)
+
+      if (to === null) {
+        to = new Date() / 1000;
+      }
+      timeString = 'from=' + d + '&to=' + to; // If from is not set, set to midnight local time in seconds (accurate to the millisecond)
     } else {
-      timeString = 'from=' + from + '&';
+      if (to === null) {
+        to = new Date() / 1000;
+      }
+      timeString = 'from=' + from + '&to=' + to;
     }
 
     var exclusiveStartKeyString = '';
@@ -326,6 +334,8 @@ var promiseChain = {
       if (lastEvaluatedKey !== 'finished') {
         promiseChain.runChain();
       } else {
+        // Done paginating through data
+        to = null;
         statusGood('Map connected live');
         return delay(3000).then(function() {
           promiseChain.runChain();
@@ -337,8 +347,8 @@ var promiseChain = {
         promiseChain.runChain();
       });
     }); // Anonymous function
-    } // runChain
-  }; // promiseChain
+  } // runChain
+}; // promiseChain
 
 // Set a timer to reload the page at midnight.
 // https://stackoverflow.com/questions/26387052/best-way-to-detect-midnight-and-reset-data
