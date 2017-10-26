@@ -46,7 +46,7 @@ exports.handler = (event, context, callback) => {
     Limit: limit
   };
 
-  if (typeof event.lastevaluatedkey != 'undefined') {
+  if (event.lastevaluatedkey.length > 1) {
     console.log('lastevaluatedkey detected ' + event.lastevaluatedkey);
     params.LastEvaluatedKey = event.lastevaluatedkey;
   }
