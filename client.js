@@ -335,6 +335,7 @@ var promiseChain = {
         promiseChain.runChain();
       } else {
         // Done paginating through data
+        from = to + 0.001;
         to = null;
         statusGood('Map connected live');
         return delay(3000).then(function() {
