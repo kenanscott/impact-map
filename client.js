@@ -318,7 +318,11 @@ var promiseChain = {
     }
 
     get('/rest/live/read?' + timeString + exclusiveStartKeyString).then(JSON.parse).then(displayPoints).then(function() {
-
+      if (lastEvaluatedKey !== 'finished') {
+        promiseChain.runChain();
+      } else {
+        resolve('done');
+      }
     }, function(error) {
       console.error("callPromise Failed!", error);
       reject(Error(error));
@@ -327,12 +331,6 @@ var promiseChain = {
     }); // Promise wrapper
     } // runChain
   }; // promiseChain
-
-if (lastEvaluatedKey !== 'finished') {
-  promiseChain.runChain();
-} else {
-  resolve('done');
-}
 
 // https://gist.github.com/KartikTalwar/2306741
 function refreshData() {
