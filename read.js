@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-/* globals console, require, exports*/
+/* globals console, require, exports, process*/
 'use strict';
 // Load required libraries
 const AWSXRay = require('aws-xray-sdk-core');
@@ -19,8 +19,8 @@ exports.handler = (event, context, callback) => {
   }
 
   // Set scan limit to 20 if not present or greater than 20
-  let limit = 20;
-  if (Number(event.limit) < 20) {
+  let limit = process.env.LIMIT;
+  if (Number(event.limit) < process.env.LIMIT) {
     console.log('Detecting limit variable ' + event.limit);
     limit = event.limit;
   }
