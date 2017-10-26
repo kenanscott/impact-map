@@ -325,9 +325,9 @@ var promiseChain = {
     }, function(error) {
       console.error("callPromise Failed!", error);
       reject(Error(error));
-    });
-    });
-  }
+  });
+});
+}
 };
 
 // https://gist.github.com/KartikTalwar/2306741
