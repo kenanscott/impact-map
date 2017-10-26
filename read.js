@@ -39,7 +39,7 @@ exports.handler = (event, context, callback) => {
     // Only get Coordinates and Action data from the table
     ProjectionExpression: 'Coordinates, #b',
     // Only return items that fall within start and stop parameters
-    FilterExpression: ':start <= Added >= :stop',
+    FilterExpression: 'Added BETWEEN :start AND :stop',
     ExpressionAttributeNames: {
       // Set an 'alias' for the word, 'Action', because 'Action' is a reserved word in DynamoDB
       '#b': 'Action'
