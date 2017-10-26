@@ -274,7 +274,6 @@ function get(url) {
       // This is called even on 404 etc
       // so check the status
       if (req.status == 200) {
-        lastUpdated = new Date() / 1000;
         // Resolve the promise with the response text
         resolve(req.response);
       } else {
@@ -312,8 +311,12 @@ var promiseChain = {
     }
 
     get('/rest/live/read?' + lastUpdatedString + exclusiveStartKeyString).then(JSON.parse).then(displayPoints).then(function() {
-      if (lastEvaluatedKey !== 'finished') promiseChain.runChain();
-      else resolve('done');
+      if (lastEvaluatedKey !== 'finished') {
+        promiseChain.runChain();
+      } else {
+        lastUpdated = new Date();
+        resolve('done');
+      }
     }, function(error) {
       console.error("callPromise Failed!", error);
       reject(Error(error));
