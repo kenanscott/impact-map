@@ -67,7 +67,7 @@ exports.handler = (event, context, callback) => {
         console.log('LastEvaluatedKey detected');
       }
       // Returns the item data back to the client
-      console.log('Returning ' + data.length + ' items to the client');
+      console.log('Returning ' + data.Items.length + ' items to the client');
       callback(null, data);
     }
   }
