@@ -67,7 +67,6 @@ exports.handler = (event, context, callback) => {
       console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
       callback(err);
     } else {
-      console.log('Scan succeeded.');
       // Continue scanning if we have more items, because scan can retrieve a maximum of 1MB of data
       if (data.hasOwnProperty('LastEvaluatedKey')) {
         console.log('LastEvaluatedKey detected');
