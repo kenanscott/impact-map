@@ -58,8 +58,6 @@ exports.handler = (event, context, callback) => {
     params.ExclusiveStartKey.Id = event.exclusivestartkey;
   }
 
-  console.log(params);
-
   console.log('Scanning table.');
   dynamodb.scan(params, onScan);
 
