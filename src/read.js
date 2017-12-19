@@ -48,16 +48,8 @@ module.exports.handler = (event, context, callback) => {
 		if (err) {
 			console.error('Unable to scan the table. ', JSON.stringify(err, null, 2));
 			callback(err);
-		} else {
-			// Continue scanning if we have more items, because scan can retrieve a maximum of 1MB of data
-			if (data.hasOwnProperty('LastEvaluatedKey')) {
-				console.log('LastEvaluatedKey detected');
-			}
-
-			// Returns the item data back to the client
-			console.log('Returning ' + data.Items.Count + ' items to the client');
-			callback(null, data);
 		}
+		else callback(null, data); // Returns the item data back to the client
 	});
 
 };
