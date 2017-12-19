@@ -28,7 +28,6 @@ var lastEvaluatedKey;
 
 // Displays the points data provided.
 function displayPoints(data) {
-
 	return new Promise(function(resolve, reject) {
 
 		if (data.hasOwnProperty('LastEvaluatedKey')) {
@@ -64,8 +63,8 @@ function displayPoints(data) {
 		document.getElementById('pageviews').innerText = pageviews;
 		document.getElementById('commitments').innerText = commitments;
 		resolve('All points processed');
-	});
 
+	});
 }
 
 
