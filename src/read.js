@@ -21,7 +21,7 @@ module.exports.handler = (event, context, callback) => {
 
 	// Set scanning parameters
 	let params = {
-		TableName: 'impact-map',
+		TableName: process.env.TABLE_NAME,
 		// Only get Coordinates and Action data from the table
 		ProjectionExpression: 'Coordinates, #b',
 		// Only return items that fall within start and stop parameters
