@@ -6,6 +6,7 @@ const documentclient = new AWS.DynamoDB.DocumentClient();
 
 module.exports.handler = (event, context, callback) => {
 
+	// Set from and to variables, use from and to in event if present.
 	let from;
 	if (Number(event.from) > 1) from = Number(event.from);
 	else from = 1;
@@ -16,10 +17,7 @@ module.exports.handler = (event, context, callback) => {
 
 	// Set scan limit to 20 if not present or greater than 20
 	let limit = process.env.LIMIT;
-	if (Number(event.limit) < process.env.LIMIT) {
-		console.log('Detecting limit variable ' + event.limit);
-		limit = event.limit;
-	}
+	if (Number(event.limit) < process.env.LIMIT) limit = event.limit;
 
 	console.log('Scanning from greater than ' + from);
 	// Set scanning parameters
