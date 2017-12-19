@@ -125,9 +125,8 @@ var promiseChain = {
 		}
 
 		get('/rest/live/read?' + timeString + exclusiveStartKeyString).then(JSON.parse).then(displayPoints).then(function() {
-			if (lastEvaluatedKey !== 'finished') {
-				promiseChain.runChain();
-			} else {
+			if (lastEvaluatedKey !== 'finished') promiseChain.runChain();
+			else {
 				// Done paginating through data
 				from = to + 0.001;
 				to = null;
@@ -136,13 +135,13 @@ var promiseChain = {
 					promiseChain.runChain();
 				});
 			}
-		}, function(error) {
+		}).catch(function() {
 			return delay(3000).then(function() {
 				promiseChain.runChain();
 			});
-		}); // Anonymous function
-	} // runChain
-}; // promiseChain
+		});
+	}
+};
 
 var midnight = new Date();
 midnight.setDate(new Date().getDate()+1);
