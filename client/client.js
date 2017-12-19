@@ -34,8 +34,6 @@ function displayPoints(data) {
 		else lastEvaluatedKey = 'finished';
 
 		for (var i = 0; i < data.Items.length; i++) {
-
-			// Create LatLng object
 			var LatLng = new google.maps.LatLng({
 				lat: data.Items[i].Coordinates[0],
 				lng: data.Items[i].Coordinates[1]
@@ -50,13 +48,12 @@ function displayPoints(data) {
 				strokeWeight: 0
 			});
 
-			if (data.Items[i].Action === 'view') {
-				pageviews++;
-			}
-			if (data.Items[i].Action === 'commitment') {
-				commitments++;
-			}
+			if (data.Items[i].Action === 'view') pageviews++;
+
+			if (data.Items[i].Action === 'commitment') commitments++;
+
 		}
+		
 		document.getElementById('pageviews').innerText = pageviews;
 		document.getElementById('commitments').innerText = commitments;
 		resolve('All points processed');
