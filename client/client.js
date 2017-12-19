@@ -1,6 +1,6 @@
 var map = null;
 var legend = document.getElementById('legend');
-var styles = require('./map-style.json');
+var mapStyle = require('./map-style.json');
 
 function initMap() {
 	// Create a map object and specify the DOM element for display.
@@ -10,7 +10,7 @@ function initMap() {
 			lng: -95.794675
 		},
 		disableDefaultUI: true,
-		styles: styles,
+		styles: mapStyle,
 		zoom: 5
 	});
 	map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
