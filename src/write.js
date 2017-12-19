@@ -21,16 +21,14 @@ exports.handler = (event, context, callback) => {
 	const geo = geoip.lookup(event.sourceIP.split(',', 1)[0]);
 	// Get ID for the item
 	const id = makeId();
-	// Set the current time and the time when the item should expire
-	const currentTime = Math.floor(new Date());
-	const currentTimePlusTwentyFourHours = (Math.floor(new Date())) + 86400;
+	
 	// Sets the parameters for writing to DynamoDB
 	const params = {
 		TableName: 'impact-map',
 		Item: {
 			'Id': id,
-			'Added': currentTime,
-			'Expire': currentTimePlusTwentyFourHours,
+			'Added': Math.floor(new Date()),
+			'Expire': (Math.floor(new Date())) + 86400,
 			'Coordinates': geo.ll,
 			'Action': event.action
 		},
