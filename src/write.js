@@ -16,7 +16,7 @@ function makeId() {
 	return text;
 }
 
-exports.handler = (event, context, callback) => {
+module.exports.handler = (event, context, callback) => {
 
 	// Set the parameters for writing to DynamoDB
 	const params = {
