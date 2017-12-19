@@ -9,23 +9,23 @@ element.insertAdjacentHTML('beforeend', '<p id="message-div"></p>');
 var messageDiv = document.getElementById('message-div');
 
 function statusGood(message) {
-  lastStatus = new Date() / 1000;
-  icon.src = 'check.svg';
-  icon.alt = 'Working';
-  messageDiv.innerText = message;
+	lastStatus = new Date() / 1000;
+	icon.src = 'check.svg';
+	icon.alt = 'Working';
+	messageDiv.innerText = message;
 }
 
 function statusBad(message) {
-  lastStatus = new Date() / 1000;
-  icon.src = 'error.svg';
-  icon.alt = 'Error';
-  messageDiv.innerText = message;
+	lastStatus = new Date() / 1000;
+	icon.src = 'error.svg';
+	icon.alt = 'Error';
+	messageDiv.innerText = message;
 }
 
 var intervalID = window.setInterval(check, 10000);
 
 function check() {
-  if (lastStatus > (new Date() / 1000) + waitTime) {
-    statusBad('Disconnected');
-  }
+	if (lastStatus > (new Date() / 1000) + waitTime) {
+		statusBad('Disconnected');
+	}
 }
