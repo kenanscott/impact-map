@@ -20,7 +20,7 @@ exports.handler = (event, context, callback) => {
 	// Look up the IP address of the client and get the coordinates
 	const geo = geoip.lookup(event.sourceIP.split(',', 1)[0]);
 	// Get ID for the item
-	let id = makeId();
+	const id = makeId();
 	// Set the current time and the time when the item should expire
 	const currentTime = Math.floor(new Date());
 	const currentTimePlusTwentyFourHours = (Math.floor(new Date())) + 86400;
