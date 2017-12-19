@@ -2,7 +2,7 @@
 // Load required libraries
 const AWSXRay = require('aws-xray-sdk-core');
 const AWS = AWSXRay.captureAWS(require('aws-sdk'));
-const dynamodb = new AWS.DynamoDB.DocumentClient();
+const documentclient = new AWS.DynamoDB.DocumentClient();
 
 module.exports.handler = (event, context, callback) => {
 
@@ -56,7 +56,7 @@ module.exports.handler = (event, context, callback) => {
 	}
 
 	console.log('Scanning table.');
-	dynamodb.scan(params, onScan);
+	documentclient.scan(params, onScan);
 
 	function onScan(err, data) {
 		// Log error if scanning returns err
