@@ -1,8 +1,10 @@
 'use strict';
+// Load required libraries
 const AWSXRay = require('aws-xray-sdk-core');
 const AWS = AWSXRay.captureAWS(require('aws-sdk'));
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const geoip = require('geoip-lite');
+
 // Create a unique ID to describe this item in DynamoDB
 function makeId() {
 	let text = '';
