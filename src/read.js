@@ -1,11 +1,8 @@
-/*jshint esversion: 6 */
-/* globals console, require, exports, process*/
 'use strict';
 // Load required libraries
 const AWSXRay = require('aws-xray-sdk-core');
 const AWS = AWSXRay.captureAWS(require('aws-sdk'));
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const moment = require('moment-timezone');
 
 exports.handler = (event, context, callback) => {
 
