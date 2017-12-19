@@ -28,7 +28,7 @@ var lastEvaluatedKey;
 
 // Displays the points data provided.
 function displayPoints(data) {
-	return new Promise(function(resolve, reject) {
+	return new Promise(function(resolve) {
 
 		if (data.hasOwnProperty('LastEvaluatedKey')) lastEvaluatedKey = data.LastEvaluatedKey.Id;
 		else lastEvaluatedKey = 'finished';
@@ -53,9 +53,10 @@ function displayPoints(data) {
 			if (data.Items[i].Action === 'commitment') commitments++;
 
 		}
-		
+
 		document.getElementById('pageviews').innerText = pageviews;
 		document.getElementById('commitments').innerText = commitments;
+
 		resolve('All points processed');
 
 	});
