@@ -1,6 +1,7 @@
 var map = null;
 var legend = document.getElementById('legend');
 var mapStyle = require('./map-style.json');
+var pointsStyle = require('./points-style.json');
 
 function initMap() {
 	// Create a map object and specify the DOM element for display.
@@ -16,23 +17,6 @@ function initMap() {
 	map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
 
 }
-
-var pointStyles = {
-	'view': {
-		'color': 'rgb(33, 150, 243)',
-		'fillColor': 'rgb(33, 150, 243)',
-		'fillOpacity': 0.2,
-		'radius': 35000,
-		'pane': 'overlayPane'
-	},
-	'commitment': {
-		'color': 'rgb(29, 41, 114)',
-		'fillColor': 'rgb(29, 41, 114)',
-		'fillOpacity': 0.6,
-		'radius': 55000,
-		'pane': 'markerPane'
-	}
-};
 
 var pageviews = 0;
 var commitments = 0;
@@ -62,11 +46,11 @@ function displayPoints(data) {
 			});
 
 			var circle = new google.maps.Circle({
-				fillColor: pointStyles[data.Items[i].Action].fillColor,
-				fillOpacity: pointStyles[data.Items[i].Action].fillOpacity,
+				fillColor: pointsStyle[data.Items[i].Action].fillColor,
+				fillOpacity: pointsStyle[data.Items[i].Action].fillOpacity,
 				map: map,
 				center: LatLng,
-				radius: pointStyles[data.Items[i].Action].radius,
+				radius: pointsStyle[data.Items[i].Action].radius,
 				strokeWeight: 0
 			});
 
