@@ -91,10 +91,11 @@ function get(url) {
 
 		// Make the request
 		req.send();
-		
+
 	});
 }
 
+// Delay for a number of milliseconds
 function delay(t) {
 	return new Promise(function(resolve) {
 		setTimeout(resolve, t);
