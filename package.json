@@ -1,0 +1,19 @@
+{
+  "name": "impact-map",
+  "version": "1.0.0",
+  "description": "Impact Map for JesusCares.com",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenanscott/impact-map.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kenanscott/impact-map/issues"
+  },
+  "homepage": "https://github.com/kenanscott/impact-map#readme"
+}
