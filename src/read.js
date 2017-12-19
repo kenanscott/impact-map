@@ -4,7 +4,7 @@ const AWSXRay = require('aws-xray-sdk-core');
 const AWS = AWSXRay.captureAWS(require('aws-sdk'));
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-exports.handler = (event, context, callback) => {
+module.exports.handler = (event, context, callback) => {
 
 	let from;
 	if (Number(event.from) > 1) {
