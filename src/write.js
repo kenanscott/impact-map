@@ -2,7 +2,7 @@
 // Load required libraries
 const AWSXRay = require('aws-xray-sdk-core');
 const AWS = AWSXRay.captureAWS(require('aws-sdk'));
-const dynamodb = new AWS.DynamoDB.DocumentClient();
+const documentclient = new AWS.DynamoDB.DocumentClient();
 const geoip = require('geoip-lite');
 
 // Create a unique ID to describe this item in DynamoDB
@@ -31,7 +31,7 @@ exports.handler = (event, context, callback) => {
 	};
 
 	// Creates the item
-	dynamodb.put(params, function(err, data) {
+	documentclient.put(params, function(err, data) {
 		if (err) {
 			console.error('Unable to add item. Error JSON:', JSON.stringify(err, null, 2)); // Handles error in console.
 			// Return an error message back to the user
