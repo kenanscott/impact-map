@@ -31,7 +31,7 @@ module.exports.handler = (event, context, callback) => {
 	};
 
 	// Creates the item
-	documentclient.put(params, function(err, data) {
+	documentclient.put(params, function(err) {
 		if (err) {
 			console.error('Unable to add item. ', JSON.stringify(err, null, 2)); // Handles error in console.
 			// Return an error message back to the user
