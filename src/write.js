@@ -17,15 +17,15 @@ function makeId() {
 }
 
 exports.handler = (event, context, callback) => {
-	
+
 	// Set the parameters for writing to DynamoDB
 	const params = {
 		TableName: 'impact-map',
 		Item: {
-			'Id': makeId();,
+			'Id': makeId(),
 			'Added': Math.floor(new Date()),
 			'Expire': (Math.floor(new Date())) + 86400,
-			'Coordinates': geoip.lookup(event.sourceIP.split(',', 1)[0]);,
+			'Coordinates': geoip.lookup(event.sourceIP.split(',', 1)[0]),
 			'Action': event.action
 		},
 	};
