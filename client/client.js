@@ -63,9 +63,8 @@ function displayPoints(data) {
 }
 
 function get(url) {
-
-	// Return a new promise.
 	return new Promise(function(resolve, reject) {
+
 		// Do the usual XHR stuff
 		var req = new XMLHttpRequest();
 		req.open('GET', url);
@@ -92,6 +91,7 @@ function get(url) {
 
 		// Make the request
 		req.send();
+		
 	});
 }
 
