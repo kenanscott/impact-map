@@ -107,21 +107,17 @@ function delay(t) {
 var promiseChain = {
 	runChain: function() {
 		var timeString = '';
-		if (from === null) {
+		if (from === null) { // If from time is not specified, default to the beginning of today.
 			var d = new Date();
 			d.setHours(0, 0, 0, 0);
-			d = d.getTime() / 1000;
-
-			if (to === null) {
-				to = new Date() / 1000;
-			}
-			timeString = 'from=' + d + '&to=' + to + '&'; // If from is not set, set to midnight local time in seconds (accurate to the millisecond)
-		} else {
-			if (to === null) {
-				to = new Date() / 1000;
-			}
-			timeString = 'from=' + from + '&to=' + to + '&';
+			from = d.getTime() / 1000;
 		}
+
+		if (to === null) { // If to time is not specified, default to now
+			to = new Date() / 1000;
+		}
+
+		timeString = 'from=' + from + '&to=' + to + '&';
 
 		var exclusiveStartKeyString = '';
 		if (lastEvaluatedKey != undefined && lastEvaluatedKey != 'finished') {
@@ -141,7 +137,6 @@ var promiseChain = {
 				});
 			}
 		}, function(error) {
-			console.error('callPromise Failed!', error);
 			return delay(3000).then(function() {
 				promiseChain.runChain();
 			});
