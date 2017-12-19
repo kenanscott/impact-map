@@ -143,6 +143,7 @@ var promiseChain = {
 	}
 };
 
+// Reload page at midnight
 var midnight = new Date();
 midnight.setDate(new Date().getDate()+1);
 midnight.setHours(0,0,0,0);
@@ -154,8 +155,6 @@ setTimeout(
 	midnightTask,
 	midnight * 1000
 );
-
-
 function midnightTask() {
 	window.location.reload(true);
 }
