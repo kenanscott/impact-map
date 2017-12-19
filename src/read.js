@@ -19,7 +19,6 @@ module.exports.handler = (event, context, callback) => {
 	let limit = process.env.LIMIT;
 	if (Number(event.limit) < process.env.LIMIT) limit = event.limit;
 
-	console.log('Scanning from greater than ' + from);
 	// Set scanning parameters
 	let params = {
 		TableName: 'impact-map',
