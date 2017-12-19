@@ -128,7 +128,7 @@ var promiseChain = {
 			if (lastEvaluatedKey !== 'finished') promiseChain.runChain();
 			else {
 				// Done paginating through data
-				from = to + 0.001;
+				from = to + 0.001; // Next time, get data starting one millisecond after the last time range
 				to = null;
 				statusGood('Map connected live');
 				return delay(3000).then(function() {
