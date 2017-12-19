@@ -43,7 +43,6 @@ module.exports.handler = (event, context, callback) => {
 		params.ExclusiveStartKey.Id = event.exclusivestartkey;
 	}
 
-	console.log('Scanning table.');
 	documentclient.scan(params, onScan);
 
 	function onScan(err, data) {
