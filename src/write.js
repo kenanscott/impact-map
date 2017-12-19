@@ -18,10 +18,7 @@ function makeId() {
 
 exports.handler = (event, context, callback) => {
 	// Look up the IP address of the client and get the coordinates
-	const ip = event.sourceIP.split(',', 1)[0];
-	console.log('Looking up IP ' + ip);
-	const geo = geoip.lookup(ip);
-	console.log('Location is ' + geo.ll);
+	const geo = geoip.lookup(event.sourceIP.split(',', 1)[0]);
 	// Get ID for the item
 	let id = makeId();
 	// Set the current time and the time when the item should expire
