@@ -1,5 +1,3 @@
-/*jshint esversion: 6 */
-// Load required libraries
 'use strict';
 const AWSXRay = require('aws-xray-sdk-core');
 const AWS = AWSXRay.captureAWS(require('aws-sdk'));
