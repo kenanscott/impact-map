@@ -30,11 +30,8 @@ var lastEvaluatedKey;
 function displayPoints(data) {
 	return new Promise(function(resolve, reject) {
 
-		if (data.hasOwnProperty('LastEvaluatedKey')) {
-			lastEvaluatedKey = data.LastEvaluatedKey.Id;
-		} else {
-			lastEvaluatedKey = 'finished';
-		}
+		if (data.hasOwnProperty('LastEvaluatedKey')) lastEvaluatedKey = data.LastEvaluatedKey.Id;
+		else lastEvaluatedKey = 'finished';
 
 		for (var i = 0; i < data.Items.length; i++) {
 
