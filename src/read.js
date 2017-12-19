@@ -7,20 +7,12 @@ const documentclient = new AWS.DynamoDB.DocumentClient();
 module.exports.handler = (event, context, callback) => {
 
 	let from;
-	if (Number(event.from) > 1) {
-		console.log('Detecting from variable, ' + event.from);
-		from = Number(event.from);
-	} else {
-		from = 1;
-	}
+	if (Number(event.from) > 1) from = Number(event.from);
+	else from = 1;
 
 	let to;
-	if (Number(event.to) > 1) {
-		console.log('Detecting to variable, ' + event.to);
-		to = Number(event.to);
-	} else {
-		to = new Date() / 1000; // If to isn't present, default to current time
-	}
+	if (Number(event.to) > 1) to = Number(event.to);
+	else to = new Date() / 1000;
 
 	// Set scan limit to 20 if not present or greater than 20
 	let limit = process.env.LIMIT;
