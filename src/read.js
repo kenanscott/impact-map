@@ -43,12 +43,10 @@ module.exports.handler = (event, context, callback) => {
 		params.ExclusiveStartKey.Id = event.exclusivestartkey;
 	}
 
-	documentclient.scan(params, onScan);
-
-	function onScan(err, data) {
+	documentclient.scan(params, function(err,data) {
 		// Log error if scanning returns err
 		if (err) {
-			console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
+			console.error('Unable to scan the table. ', JSON.stringify(err, null, 2));
 			callback(err);
 		} else {
 			// Continue scanning if we have more items, because scan can retrieve a maximum of 1MB of data
@@ -60,5 +58,6 @@ module.exports.handler = (event, context, callback) => {
 			console.log('Returning ' + data.Items.Count + ' items to the client');
 			callback(null, data);
 		}
-	}
+	});
+
 };
