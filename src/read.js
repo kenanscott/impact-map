@@ -47,7 +47,7 @@ module.exports.handler = (event, context, callback) => {
 		// Log error if scanning returns err
 		if (err) {
 			console.error('Unable to scan the table. ', JSON.stringify(err, null, 2));
-			callback(err);
+			callback(null, 'Unable to retrieve the data.');
 		}
 		else callback(null, data); // Returns the item data back to the client
 	});
