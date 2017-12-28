@@ -106,9 +106,6 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 20
         WriteCapacityUnits: 5
-      Tags:
-        -
-          group: impact-map
       TimeToLiveSpecification:
         AttributeName: Expire
         Enabled: true
