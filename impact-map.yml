@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Parameters:
+  Stage:
+    Type: String
+Resources:
+  WriteFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: src/write.handler
+      Runtime: nodejs6.10
+      CodeUri: 'impact-map.zip'
+      Description: Writes event data to DynamoDB for impact-map
+      MemorySize: 128
+      Timeout: 3
+      Role: !GetAtt WriteFunctionRole.Arn
+      Tags:
+        group: impact-map
+      Tracing: Active
+  WriteFunctionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              -
+                sts:AssumeRole
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess'
+      Policies:
+        -
+          PolicyName: DynamoWritePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              -
+                Effect: Allow
+                Action:
+                  -
+                    'dynamodb:PutItem'
+                Resource:
+                  -
+                    !Ref Table
+  ReadFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: src/read.handler
+      Runtime: nodejs6.10
+      CodeUri: 'impact-map.zip'
+      Description: Reads event data from DynamoDB for impact-map
+      MemorySize: 128
+      Timeout: 7
+      Role: !GetAtt ReadFunctionRole.Arn
+      Tags:
+        group: impact-map
+      Tracing: Active
+  ReadFunctionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              -
+                sts:AssumeRole
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess'
+      Policies:
+        -
+          PolicyName: DynamoReadPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              -
+                Effect: Allow
+                Action:
+                  -
+                    'dynamodb:Scan'
+                Resource:
+                  -
+                    !Ref Table
