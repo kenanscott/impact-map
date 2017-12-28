@@ -238,7 +238,7 @@ Resources:
                 500:
                   description: '500 response'
               x-amazon-apigateway-integration:
-                responses:
+                responses: 
                   default:
                     statusCode: '200'
                   Unable*:
