@@ -206,10 +206,8 @@ Resources:
       DefinitionBody:
         swagger: '2.0'
         info:
-          version: '2017-09-07T16:55:49Z'
           title: 'JesusCares API'
-        host: '8dc07ebob7.execute-api.us-west-2.amazonaws.com'
-        basePath: '/dev'
+        basePath: '/prod'
         schemes:
         - 'https'
         paths:
