@@ -1,10 +1,19 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+      - pip install --upgrade awscli # Upgrade awscli
   build:
     commands:
-      - ls -l -R # Logs all files to console
-
+      - npm install # Install package
+      - npm test # Test package
+      - npm prune --production # Remove devDependencies from package
+      - chmod -R 777 * # Set 777 permissions for all files
+      - zip -r impact-map.zip . # Zip current directory
+      # Upload and replace Uri values in template
+      - aws cloudformation package --template-file impact-map.yml --s3-bucket groundwire --s3-prefix impact-map --output-template-file impact-map-replaced.yml
 artifacts:
   files:
-    - '**/*' # Sets all the files to be in the artifacts file
+    # Output the template with replaced values
+    - 'impact-map-replaced.yml'

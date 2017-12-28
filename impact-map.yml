@@ -1,0 +1,430 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Parameters:
+  Stage:
+    Type: String
+Resources:
+  WriteFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: src/write.handler
+      Runtime: nodejs6.10
+      CodeUri: 'impact-map.zip'
+      Description: Writes event data to DynamoDB for impact-map
+      MemorySize: 128
+      Timeout: 3
+      Role: !GetAtt WriteFunctionRole.Arn
+      Tags:
+        group: impact-map
+      Tracing: Active
+  WriteFunctionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              -
+                sts:AssumeRole
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess'
+      Policies:
+        -
+          PolicyName: DynamoWritePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              -
+                Effect: Allow
+                Action:
+                  -
+                    'dynamodb:PutItem'
+                Resource:
+                  -
+                    !GetAtt Table.Arn
+  ReadFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: src/read.handler
+      Runtime: nodejs6.10
+      CodeUri: 'impact-map.zip'
+      Description: Reads event data from DynamoDB for impact-map
+      MemorySize: 128
+      Timeout: 7
+      Role: !GetAtt ReadFunctionRole.Arn
+      Tags:
+        group: impact-map
+      Tracing: Active
+  ReadFunctionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              -
+                sts:AssumeRole
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess'
+      Policies:
+        -
+          PolicyName: DynamoReadPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              -
+                Effect: Allow
+                Action:
+                  -
+                    'dynamodb:Scan'
+                Resource:
+                  -
+                    !GetAtt Table.Arn
+  Table:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: Id
+          AttributeType: S
+      KeySchema:
+        -
+          AttributeName: Id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 20
+        WriteCapacityUnits: 5
+      Tags:
+        group: impact-map
+      TimeToLiveSpecification:
+        AttributeName: Expire
+        Enabled: true
+  WriteScalingPolicy:
+    Type: 'AWS::ApplicationAutoScaling::ScalingPolicy'
+    Properties:
+      PolicyName: WriteAutoScalingPolicy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref WriteCapacityScalableTarget
+      TargetTrackingScalingPolicyConfiguration:
+        TargetValue: 70.0
+        ScaleInCooldown: 60
+        ScaleOutCooldown: 60
+        PredefinedMetricSpecification:
+          PredefinedMetricType: DynamoDBWriteCapacityUtilization
+  WriteCapacityScalableTarget:
+    Type: 'AWS::ApplicationAutoScaling::ScalableTarget'
+    Properties:
+      MaxCapacity: 1000
+      MinCapacity: 5
+      ResourceId: !Join
+        - /
+        - - table
+          - !Ref Table
+      RoleARN: !GetAtt ScalingRole.Arn
+      ScalableDimension: dynamodb:table:WriteCapacityUnits
+      ServiceNamespace: dynamodb
+  ReadScalingPolicy:
+    Type: 'AWS::ApplicationAutoScaling::ScalingPolicy'
+    Properties:
+      PolicyName: ReadAutoScalingPolicy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref ReadCapacityScalableTarget
+      TargetTrackingScalingPolicyConfiguration:
+        TargetValue: 70.0
+        ScaleInCooldown: 60
+        ScaleOutCooldown: 60
+        PredefinedMetricSpecification:
+          PredefinedMetricType: DynamoDBReadCapacityUtilization
+  ReadCapacityScalableTarget:
+    Type: 'AWS::ApplicationAutoScaling::ScalableTarget'
+    Properties:
+      MaxCapacity: 1000
+      MinCapacity: 20
+      ResourceId: !Join
+        - /
+        - - table
+          - !Ref Table
+      RoleARN: !GetAtt ScalingRole.Arn
+      ScalableDimension: dynamodb:table:ReadCapacityUnits
+      ServiceNamespace: dynamodb
+  ScalingRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: 'Allow'
+            Principal:
+              Service:
+                - application-autoscaling.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: '/'
+      Policies:
+        -
+          PolicyName: 'ScalingTablePolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              -
+                Effect: 'Allow'
+                Action:
+                  - 'dynamodb:DescribeTable'
+                  - 'dynamodb:UpdateTable'
+                Resource: !GetAtt Table.Arn
+        -
+          PolicyName: 'ScalingCloudWatchPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              -
+                Effect: 'Allow'
+                Action:
+                  - 'cloudwatch:PutMetricAlarm'
+                  - 'cloudwatch:DescribeAlarms'
+                  - 'cloudwatch:GetMetricStatistics'
+                  - 'cloudwatch:SetAlarmState'
+                  - 'cloudwatch:DeleteAlarms'
+                Resource: '*'
+  Api:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: !Ref Stage
+      DefinitionBody:
+        swagger: '2.0'
+        info:
+          title: 'JesusCares API'
+        basePath: '/prod'
+        schemes:
+        - 'https'
+        paths:
+          /rest/live/read:
+            get:
+              consumes:
+              - 'application/json'
+              produces:
+              - 'application/json'
+              parameters:
+              - name: 'from'
+                in: 'query'
+                required: false
+                type: 'string'
+              - name: 'exclusivestartkey'
+                in: 'query'
+                required: false
+                type: 'string'
+              - name: 'to'
+                in: 'query'
+                required: false
+                type: 'string'
+              responses:
+                200:
+                  description: '200 response'
+                  schema:
+                    $ref: '#/definitions/LiveData'
+                500:
+                  description: '500 response'
+              x-amazon-apigateway-integration:
+                responses: 
+                  default:
+                    statusCode: '200'
+                  Unable*:
+                    statusCode: '500'
+                requestTemplates:
+                  application/json: "{\n\"from\": \"$input.params('from')\",\n\"to\": \"$input.params('to')\"\
+                    ,\n\"exclusivestartkey\": \"$input.params('exclusivestartkey')\"\n}"
+                uri:
+                  Fn::Join:
+                    - ''
+                    - - 'arn:aws:apigateway:'
+                      - !Ref 'AWS::Region'
+                      - ':lambda:path/2015-03-31/functions/'
+                      - !GetAtt ReadFunction.Arn
+                      - '/invocations'
+                passthroughBehavior: 'when_no_templates'
+                httpMethod: 'POST'
+                contentHandling: 'CONVERT_TO_TEXT'
+                type: 'aws'
+          /rest/live/write:
+            post:
+              consumes:
+              - 'application/json'
+              produces:
+              - 'application/json'
+              parameters:
+              - name: 'action'
+                in: 'query'
+                required: true
+                type: 'string'
+              - name: 'X-Forwarded-For'
+                in: 'header'
+                required: true
+                type: 'string'
+              responses:
+                200:
+                  description: '200 response'
+                  schema:
+                    $ref: '#/definitions/WriteResponse'
+                500:
+                  description: '500 response'
+                  schema:
+                    $ref: '#/definitions/WriteResponse'
+              x-amazon-apigateway-request-validator: 'Validate query string parameters and\
+                \ headers'
+              x-amazon-apigateway-integration:
+                responses:
+                  default:
+                    statusCode: '200'
+                  '''error'': true*':
+                    statusCode: '500'
+                requestTemplates:
+                  application/json: "{\n\"action\": \"$input.params('action')\",\n\"sourceIP\"\
+                    \ : \"$input.params('X-Forwarded-For')\"\n}"
+                uri:
+                  Fn::Join:
+                    - ''
+                    - - 'arn:aws:apigateway:'
+                      - !Ref 'AWS::Region'
+                      - ':lambda:path/2015-03-31/functions/'
+                      - !GetAtt WriteFunction.Arn
+                      - '/invocations'
+                passthroughBehavior: 'when_no_templates'
+                httpMethod: 'POST'
+                contentHandling: 'CONVERT_TO_TEXT'
+                type: 'aws'
+        definitions:
+          LiveData:
+            type: 'object'
+            required:
+            - 'Count'
+            - 'ScannedCount'
+            properties:
+              Count:
+                type: 'number'
+                description: 'The number of items being returned (visitor actions).'
+              ScannedCount:
+                type: 'number'
+                description: 'The number of items that were scanned in the table.'
+              Items:
+                type: 'array'
+                description: 'An array of returned items.'
+                items:
+                  type: 'object'
+                  properties:
+                    Action:
+                      type: 'string'
+                      description: 'The action that the visitor performed on the web page.'
+                    Coordinates:
+                      type: 'array'
+                      description: 'The geographical coordinates indicating approximately\
+                        \ where the user is located.'
+                  required:
+                  - 'Action'
+                  - 'Coordinates'
+            title: 'LiveData'
+            description: 'Live data response'
+          WriteResponse:
+            type: 'object'
+            required:
+            - 'error'
+            - 'message'
+            properties:
+              error:
+                type: 'boolean'
+                description: 'Whether or not an error occurred when processing the request.'
+              message:
+                type: 'string'
+                description: 'The message regarding the response'
+            title: 'WriteResponse'
+        x-amazon-apigateway-documentation:
+          version: '1'
+          createdDate: '2017-11-27T21:15:33Z'
+          documentationParts:
+          - location:
+              type: 'METHOD'
+              path: '/rest/forms'
+              method: 'POST'
+            properties:
+              description: 'Accepts commitment form submissions for processing.'
+          - location:
+              type: 'MODEL'
+              name: 'Empty'
+            properties:
+              title: 'Empty Schema'
+          - location:
+              type: 'REQUEST_BODY'
+              path: '/rest/forms'
+              method: 'POST'
+            properties:
+              description: 'Commitment form values to be submitted.'
+          - location:
+              type: 'RESOURCE'
+              path: '/rest/forms'
+            properties:
+              description: 'Handles commitment forms.'
+          - location:
+              type: 'RESPONSE'
+              path: '/rest/donate'
+              method: 'OPTIONS'
+              statusCode: '200'
+            properties:
+              description: '200 response'
+          - location:
+              type: 'RESPONSE'
+              path: '/rest/donate'
+              method: 'POST'
+              statusCode: '200'
+            properties:
+              description: '200 response'
+          - location:
+              type: 'RESPONSE'
+              path: '/rest/forms'
+              method: 'POST'
+              statusCode: '200'
+            properties:
+              description: 'Request was successful. Form will be processed.'
+          - location:
+              type: 'RESPONSE'
+              path: '/rest/forms'
+              method: 'POST'
+              statusCode: '400'
+            properties:
+              description: 'Request was unsuccessful, client error'
+          - location:
+              type: 'RESPONSE'
+              path: '/rest/forms'
+              method: 'POST'
+              statusCode: '500'
+            properties:
+              description: 'Request was unsuccessful, server error'
+          - location:
+              type: 'RESPONSE'
+              path: '/rest/live/read'
+              method: 'GET'
+              statusCode: '200'
+            properties:
+              description: '200 response'
+          - location:
+              type: 'RESPONSE'
+              path: '/rest/live/write'
+              method: 'GET'
+              statusCode: '200'
+            properties:
+              description: '200 response'
+        x-amazon-apigateway-request-validators:
+          Validate query string parameters and headers:
+            validateRequestParameters: true
+            validateRequestBody: false
