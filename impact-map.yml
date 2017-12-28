@@ -199,3 +199,234 @@ Resources:
                   - 'cloudwatch:SetAlarmState'
                   - 'cloudwatch:DeleteAlarms'
                 Resource: '*'
+  Api:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: !Ref Stage
+      DefinitionBody:
+        swagger: '2.0'
+        info:
+          version: '2017-09-07T16:55:49Z'
+          title: 'JesusCares API'
+        host: '8dc07ebob7.execute-api.us-west-2.amazonaws.com'
+        basePath: '/dev'
+        schemes:
+        - 'https'
+        paths:
+          /rest/live/read:
+            get:
+              consumes:
+              - 'application/json'
+              produces:
+              - 'application/json'
+              parameters:
+              - name: 'from'
+                in: 'query'
+                required: false
+                type: 'string'
+              - name: 'exclusivestartkey'
+                in: 'query'
+                required: false
+                type: 'string'
+              - name: 'to'
+                in: 'query'
+                required: false
+                type: 'string'
+              responses:
+                200:
+                  description: '200 response'
+                  schema:
+                    $ref: '#/definitions/LiveData'
+                500:
+                  description: '500 response'
+              x-amazon-apigateway-integration:
+                responses:
+                  default:
+                    statusCode: '200'
+                  Unable*:
+                    statusCode: '500'
+                requestTemplates:
+                  application/json: "{\n\"from\": \"$input.params('from')\",\n\"to\": \"$input.params('to')\"\
+                    ,\n\"exclusivestartkey\": \"$input.params('exclusivestartkey')\"\n}"
+                uri:
+                  Fn::Join:
+                    - ''
+                    - - 'arn:aws:apigateway:'
+                      - !Ref 'AWS::Region'
+                      - ':lambda:path/2015-03-31/functions/'
+                      - !GetAtt ReadFunction.Arn
+                      - '/invocations'
+                passthroughBehavior: 'when_no_templates'
+                httpMethod: 'POST'
+                contentHandling: 'CONVERT_TO_TEXT'
+                type: 'aws'
+          /rest/live/write:
+            post:
+              consumes:
+              - "application/json"
+              produces:
+              - "application/json"
+              parameters:
+              - name: "action"
+                in: "query"
+                required: true
+                type: "string"
+              - name: "X-Forwarded-For"
+                in: "header"
+                required: true
+                type: "string"
+              responses:
+                200:
+                  description: "200 response"
+                  schema:
+                    $ref: "#/definitions/WriteResponse"
+                500:
+                  description: "500 response"
+                  schema:
+                    $ref: "#/definitions/WriteResponse"
+              x-amazon-apigateway-request-validator: "Validate query string parameters and\
+                \ headers"
+              x-amazon-apigateway-integration:
+                responses:
+                  default:
+                    statusCode: "200"
+                  '''error'': true*':
+                    statusCode: "500"
+                requestTemplates:
+                  application/json: "{\n\"action\": \"$input.params('action')\",\n\"sourceIP\"\
+                    \ : \"$input.params('X-Forwarded-For')\"\n}"
+                uri:
+                  Fn::Join:
+                    - ''
+                    - - 'arn:aws:apigateway:'
+                      - !Ref 'AWS::Region'
+                      - ':lambda:path/2015-03-31/functions/'
+                      - !GetAtt WriteFunction.Arn
+                      - '/invocations'
+                passthroughBehavior: "when_no_templates"
+                httpMethod: "POST"
+                contentHandling: "CONVERT_TO_TEXT"
+                type: "aws"
+        definitions:
+          LiveData:
+            type: "object"
+            required:
+            - "Count"
+            - "ScannedCount"
+            properties:
+              Count:
+                type: "number"
+                description: "The number of items being returned (visitor actions)."
+              ScannedCount:
+                type: "number"
+                description: "The number of items that were scanned in the table."
+              Items:
+                type: "array"
+                description: "An array of returned items."
+                items:
+                  type: "object"
+                  properties:
+                    Action:
+                      type: "string"
+                      description: "The action that the visitor performed on the web page."
+                    Coordinates:
+                      type: "array"
+                      description: "The geographical coordinates indicating approximately\
+                        \ where the user is located."
+                  required:
+                  - "Action"
+                  - "Coordinates"
+            title: "LiveData"
+            description: "Live data response"
+          WriteResponse:
+            type: "object"
+            required:
+            - "error"
+            - "message"
+            properties:
+              error:
+                type: "boolean"
+                description: "Whether or not an error occurred when processing the request."
+              message:
+                type: "string"
+                description: "The message regarding the response"
+            title: "WriteResponse"
+        x-amazon-apigateway-documentation:
+          version: "1"
+          createdDate: "2017-11-27T21:15:33Z"
+          documentationParts:
+          - location:
+              type: "METHOD"
+              path: "/rest/forms"
+              method: "POST"
+            properties:
+              description: "Accepts commitment form submissions for processing."
+          - location:
+              type: "MODEL"
+              name: "Empty"
+            properties:
+              title: "Empty Schema"
+          - location:
+              type: "REQUEST_BODY"
+              path: "/rest/forms"
+              method: "POST"
+            properties:
+              description: "Commitment form values to be submitted."
+          - location:
+              type: "RESOURCE"
+              path: "/rest/forms"
+            properties:
+              description: "Handles commitment forms."
+          - location:
+              type: "RESPONSE"
+              path: "/rest/donate"
+              method: "OPTIONS"
+              statusCode: "200"
+            properties:
+              description: "200 response"
+          - location:
+              type: "RESPONSE"
+              path: "/rest/donate"
+              method: "POST"
+              statusCode: "200"
+            properties:
+              description: "200 response"
+          - location:
+              type: "RESPONSE"
+              path: "/rest/forms"
+              method: "POST"
+              statusCode: "200"
+            properties:
+              description: "Request was successful. Form will be processed."
+          - location:
+              type: "RESPONSE"
+              path: "/rest/forms"
+              method: "POST"
+              statusCode: "400"
+            properties:
+              description: "Request was unsuccessful, client error"
+          - location:
+              type: "RESPONSE"
+              path: "/rest/forms"
+              method: "POST"
+              statusCode: "500"
+            properties:
+              description: "Request was unsuccessful, server error"
+          - location:
+              type: "RESPONSE"
+              path: "/rest/live/read"
+              method: "GET"
+              statusCode: "200"
+            properties:
+              description: "200 response"
+          - location:
+              type: "RESPONSE"
+              path: "/rest/live/write"
+              method: "GET"
+              statusCode: "200"
+            properties:
+              description: "200 response"
+        x-amazon-apigateway-request-validators:
+          Validate query string parameters and headers:
+            validateRequestParameters: true
+            validateRequestBody: false
