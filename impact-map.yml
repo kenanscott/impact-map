@@ -47,7 +47,7 @@ Resources:
                     'dynamodb:PutItem'
                 Resource:
                   -
-                    !Ref Table
+                    !GetAtt Table.Arn
   ReadFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -91,4 +91,23 @@ Resources:
                     'dynamodb:Scan'
                 Resource:
                   -
-                    !Ref Table
+                    !GetAtt Table.Arn
+  Table:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: Id
+          AttributeType: S
+      KeySchema:
+        -
+          AttributeName: Id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 20
+        WriteCapacityUnits: 5
+      Tags:
+        group: impact-map
+      TimeToLiveSpecification:
+        AttributeName: Expire
+        Enabled: true
