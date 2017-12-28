@@ -35,8 +35,8 @@ module.exports.handler = (event, context, callback) => {
 		if (err) {
 			console.error('Unable to add item. ', JSON.stringify(err, null, 2)); // Handles error in console.
 			// Return an error message back to the user
-			callback('Entry was not successful');
+			callback({'error': true, 'message': 'Entry was not successful'});
 		}
-		else callback(null, 'Added item');
+		else callback({'error': false, 'message': 'Entry was successful'});
 	});
 };
