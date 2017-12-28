@@ -15,8 +15,7 @@ Resources:
       Timeout: 3
       Role: !GetAtt WriteFunctionRole.Arn
       Tags:
-        -
-          group: impact-map
+        group: impact-map
       Tracing: Active
   WriteFunctionRole:
     Type: 'AWS::IAM::Role'
@@ -60,8 +59,7 @@ Resources:
       Timeout: 7
       Role: !GetAtt ReadFunctionRole.Arn
       Tags:
-        -
-          group: impact-map
+        group: impact-map
       Tracing: Active
   ReadFunctionRole:
     Type: 'AWS::IAM::Role'
