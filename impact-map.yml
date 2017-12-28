@@ -231,11 +231,11 @@ Resources:
                 required: false
                 type: 'string'
               responses:
-                200:
+                '200':
                   description: '200 response'
                   schema:
                     $ref: '#/definitions/LiveData'
-                500:
+                '500':
                   description: '500 response'
               x-amazon-apigateway-integration:
                 responses:
@@ -274,11 +274,11 @@ Resources:
                 required: true
                 type: 'string'
               responses:
-                200:
+                '200':
                   description: '200 response'
                   schema:
                     $ref: '#/definitions/WriteResponse'
-                500:
+                '500':
                   description: '500 response'
                   schema:
                     $ref: '#/definitions/WriteResponse'
