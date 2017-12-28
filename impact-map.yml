@@ -11,6 +11,15 @@ Resources:
       Runtime: nodejs6.10
       CodeUri: 'impact-map.zip'
       Description: Writes event data to DynamoDB for impact-map
+      Events:
+        Type: Api
+          Properties:
+            Path: !Join
+              - ''
+              - - '/'
+                - !Ref WriteFunction
+            Method: POST
+            RestApiId: !Ref Api
       MemorySize: 128
       Timeout: 3
       Role: !GetAtt WriteFunctionRole.Arn
@@ -55,6 +64,15 @@ Resources:
       Runtime: nodejs6.10
       CodeUri: 'impact-map.zip'
       Description: Reads event data from DynamoDB for impact-map
+      Events:
+        Type: Api
+          Properties:
+            Path: !Join
+              - ''
+              - - '/'
+                - !Ref ReadFunction
+            Method: GET
+            RestApiId: !Ref Api
       MemorySize: 128
       Timeout: 7
       Role: !GetAtt ReadFunctionRole.Arn
