@@ -111,3 +111,91 @@ Resources:
       TimeToLiveSpecification:
         AttributeName: Expire
         Enabled: true
+  WriteScalingPolicy:
+    Type: 'AWS::ApplicationAutoScaling::ScalingPolicy'
+    Properties:
+      PolicyName: WriteAutoScalingPolicy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref WriteCapacityScalableTarget
+      TargetTrackingScalingPolicyConfiguration:
+        TargetValue: 70.0
+        ScaleInCooldown: 60
+        ScaleOutCooldown: 60
+        PredefinedMetricSpecification:
+          PredefinedMetricType: DynamoDBWriteCapacityUtilization
+  WriteCapacityScalableTarget:
+    Type: 'AWS::ApplicationAutoScaling::ScalableTarget'
+    Properties:
+      MaxCapacity: 1000
+      MinCapacity: 5
+      ResourceId: !Join
+        - /
+        - - table
+          - !Ref Table
+      RoleARN: !GetAtt ScalingRole.Arn
+      ScalableDimension: dynamodb:table:WriteCapacityUnits
+      ServiceNamespace: dynamodb
+  ReadScalingPolicy:
+    Type: 'AWS::ApplicationAutoScaling::ScalingPolicy'
+    Properties:
+      PolicyName: ReadAutoScalingPolicy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref ReadCapacityScalableTarget
+      TargetTrackingScalingPolicyConfiguration:
+        TargetValue: 70.0
+        ScaleInCooldown: 60
+        ScaleOutCooldown: 60
+        PredefinedMetricSpecification:
+          PredefinedMetricType: DynamoDBReadCapacityUtilization
+  ReadCapacityScalableTarget:
+    Type: 'AWS::ApplicationAutoScaling::ScalableTarget'
+    Properties:
+      MaxCapacity: 1000
+      MinCapacity: 20
+      ResourceId: !Join
+        - /
+        - - table
+          - !Ref Table
+      RoleARN: !GetAtt ScalingRole.Arn
+      ScalableDimension: dynamodb:table:ReadCapacityUnits
+      ServiceNamespace: dynamodb
+  ScalingRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          -
+            Effect: 'Allow'
+            Principal:
+              Service:
+                - application-autoscaling.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: '/'
+      Policies:
+        -
+          PolicyName: 'ScalingTablePolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              -
+                Effect: 'Allow'
+                Action:
+                  - 'dynamodb:DescribeTable'
+                  - 'dynamodb:UpdateTable'
+                Resource: !GetAtt Table.Arn
+        -
+          PolicyName: 'ScalingCloudWatchPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              -
+                Effect: 'Allow'
+                Action:
+                  - 'cloudwatch:PutMetricAlarm'
+                  - 'cloudwatch:DescribeAlarms'
+                  - 'cloudwatch:GetMetricStatistics'
+                  - 'cloudwatch:SetAlarmState'
+                  - 'cloudwatch:DeleteAlarms'
+                Resource: '*'
